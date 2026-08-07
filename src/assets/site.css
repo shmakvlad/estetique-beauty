@@ -79,8 +79,8 @@ button{font:inherit; cursor:pointer; border:0; background:none; color:inherit}
   stroke-linecap:round; stroke-linejoin:round}
 .cbtn-row .lb{font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted);
   display:block; line-height:1.3; margin-bottom:3px}
-.cbtn-row .vl{font-family:"Playfair Display",Georgia,serif; font-size:23px; font-weight:400;
-  line-height:1.1; letter-spacing:.01em; display:block; color:var(--ink)}
+.cbtn-row .vl{font-size:20px; font-weight:500; line-height:1.15; letter-spacing:.005em;
+  display:block; color:var(--ink); font-variant-numeric:proportional-nums}
 .cbtn-row:after{content:"→"; margin-left:auto; font-size:17px; color:var(--hl); flex:none;
   opacity:0; transform:translateX(-8px);
   transition:opacity .35s var(--ease), transform .35s var(--ease)}
@@ -112,9 +112,9 @@ button{font:inherit; cursor:pointer; border:0; background:none; color:inherit}
 .nav>li.open .caret{transform:rotate(180deg)}
 
 .hdr-contact{display:flex; align-items:center; gap:12px; flex:none}
-.hdr-tel{display:inline-flex; align-items:center; gap:10px;
-  font-family:"Playfair Display",Georgia,serif; font-size:18px; font-weight:400;
-  white-space:nowrap; letter-spacing:.01em;
+.hdr-tel{display:inline-flex; align-items:center; gap:10px; line-height:1;
+  font-size:15.5px; font-weight:500; white-space:nowrap; letter-spacing:.005em;
+  font-variant-numeric:proportional-nums;
   border:1px solid var(--line-2); border-radius:var(--r-sm); padding:7px 16px 7px 8px; min-height:46px;
   transition:border-color .3s var(--ease), background .3s, box-shadow .3s}
 .hdr-tel .ico{width:30px; height:30px; border-radius:50%; background:var(--soft); flex:none;
@@ -624,14 +624,14 @@ button{font:inherit; cursor:pointer; border:0; background:none; color:inherit}
 @media (max-width:860px){ .hdr .btn{display:none} }
 @media (max-width:640px){
   .logo b{font-size:20px} .logo span{font-size:9.5px; letter-spacing:.22em}
-  .hdr-tel{font-size:15px; padding:6px 12px 6px 6px; gap:8px; min-height:42px}
+  .hdr-tel{font-size:14px; padding:6px 12px 6px 6px; gap:8px; min-height:42px}
   .hdr-tel .ico{width:26px; height:26px}
   .hdr-tel svg{width:14px; height:14px}
   .hdr-in{gap:9px}
 }
 @media (max-width:400px){
   .logo span{display:none}
-  .hdr-tel{font-size:14px; padding:6px 10px 6px 5px}
+  .hdr-tel{font-size:13.5px; padding:6px 10px 6px 5px}
 }
 @media (min-width:1120px){ .sticky{display:none} .ftr{padding-bottom:42px} }
 
@@ -660,12 +660,14 @@ button{font:inherit; cursor:pointer; border:0; background:none; color:inherit}
 .panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--r-lg); padding:22px}
 .panel .price{font-family:"Playfair Display",Georgia,serif; font-size:34px; line-height:1}
 .panel .price small{font-size:14px; color:var(--muted); font-family:Inter,sans-serif; margin-left:6px}
-.specs{margin:18px 0; display:grid; gap:0}
-.specs li{display:flex; justify-content:space-between; align-items:baseline; gap:14px;
-  padding:9px 0; border-bottom:1px solid var(--line); font-size:14px}
-.specs li:last-child{border-bottom:0}
-.specs span{color:var(--muted)}
-.specs b{font-weight:500; text-align:right}
+.specs{margin:20px 0; display:grid; gap:0}
+.specs li{display:grid; grid-template-columns:minmax(0,auto) minmax(0,1fr); gap:16px;
+  align-items:baseline; padding:11px 0; border-bottom:1px solid rgba(220,212,201,.6)}
+.specs li:first-child{padding-top:0}
+.specs li:last-child{border-bottom:0; padding-bottom:0}
+.specs span{font-size:13.5px; color:var(--muted); line-height:1.35}
+.specs b{font-size:14.5px; font-weight:500; color:var(--ink); text-align:right;
+  line-height:1.35; letter-spacing:.005em}
 .panel .btn{width:100%}
 .panel .msg-grid{margin-top:10px}
 .panel .hint{font-size:12.5px; color:var(--muted); text-align:center; margin:12px 0 0; line-height:1.5}

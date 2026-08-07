@@ -240,7 +240,21 @@
     "gallery": {
         "eyebrow": "Кабинет",
         "title": "Где всё происходит",
-        "photos": ["", "b", "c", "d"]
+        "photos": [
+            "g0.jpg",
+            "g1.jpg",
+            "g4.jpg",
+            "g5.jpg",
+            "g11.jpg",
+            "g17.jpg",
+            "g9.jpg",
+            "g10.jpg",
+            "g12.jpg",
+            "g6.jpg",
+            "g7.jpg",
+            "g15.jpg"
+        ],
+        "photoAlt": "Фото кабинета косметолога"
     },
     "why": {
         "eyebrow": "Почему выбирают кабинет",

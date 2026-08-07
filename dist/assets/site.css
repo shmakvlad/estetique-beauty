@@ -725,3 +725,8 @@ button{font:inherit; cursor:pointer; border:0; background:none; color:inherit}
   .ind{grid-template-columns:repeat(2,1fr); gap:12px 26px}
 }
 @media (min-width:1000px){ .stage-grid{grid-template-columns:repeat(4,1fr)} }
+
+/* ---------- ФОТО ВМЕСТО ЗАГЛУШЕК ---------- */
+.ph-img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block}
+.hero-ph .frame .ph-img,.gal .ph-img,.stage .im .ph-img,.proc-gal .ph-img{border-radius:inherit}
+.about .im .ph-img,.edu .im .ph-img{border-radius:inherit}

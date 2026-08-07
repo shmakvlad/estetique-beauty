@@ -3,7 +3,7 @@
 // Запуск: node build.mjs   (или npm run build)
 // Результат: dist/
 
-import { readFileSync, writeFileSync, mkdirSync, cpSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, cpSync, rmSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -12,6 +12,11 @@ const read = (p) => JSON.parse(readFileSync(join(ROOT, p), 'utf8'));
 
 const site = read('data/site.json');
 const db = read('data/procedures.json');
+
+// Локальная сборка: ссылки на index.html, чтобы страницы открывались с диска
+// без веб-сервера. Для боевой выкладки — npm run build:prod (чистые адреса).
+const LOCAL = process.argv.includes('--local');
+const IDX = LOCAL ? 'index.html' : '';
 
 const C = site.contacts;
 const cats = [...db.categories].sort((a, b) => a.order - b.order);
@@ -25,10 +30,25 @@ const pages = db.procedures.filter((p) => p.page);
 const money = (p) => `${p.priceFrom ? 'от ' : ''}${p.price} BYN`;
 const moneyShort = (p) => `${p.priceFrom ? 'от ' : ''}${p.price}`;
 const minPrice = (id) => Math.min(...procsOf(id).map((p) => p.price));
-const link = (p, root) => (p.page ? `${root}uslugi/${p.slug}/` : `${root}#dir`);
+// Ссылка на главную/её якорь. С корня — обычный якорь, со вложенной страницы —
+// путь до index.html, иначе браузер при открытии с диска показывает список папки.
+const hrefHome = (root, hash = '') => (root ? `${root}${IDX}${hash}` : hash || '#');
+const link = (p, root) => (p.page ? `${root}uslugi/${p.slug}/${IDX}` : hrefHome(root, '#dir'));
 const tel = `tel:${C.phoneHref}`;
 const ph = (v) => (v ? ` ${v}` : '');
 const list = (a, f) => a.map(f).join('\n');
+
+// Фото из src/images или градиентная заглушка, если файла ещё нет.
+// В data достаточно указать имя файла: "photo": "mariya.webp"
+const isFile = (v) => typeof v === 'string' && /\.(webp|jpg|jpeg|png|avif)$/i.test(v);
+function pic(photo, { root = '', alt = '', cls = '', w, h, eager = false } = {}) {
+  if (isFile(photo)) {
+    const size = w && h ? ` width="${w}" height="${h}"` : '';
+    const load = eager ? ' fetchpriority="high"' : ' loading="lazy" decoding="async"';
+    return `<img class="ph-img${cls ? ' ' + cls : ''}" src="${root}images/${photo}" alt="${alt}"${size}${load}>`;
+  }
+  return `<div class="ph${ph(photo)}"></div>`;
+}
 
 // ——— иконки ———
 const sprite = `<svg style="display:none">
@@ -52,11 +72,11 @@ const msgButtons = (extra = '') => `<a class="cbtn tg" href="${C.telegram}" targ
 // ——— общие части ———
 const header = (root) => `<header class="hdr" id="hdr">
   <div class="hdr-in">
-    <a href="${root || '#'}" class="logo"><b>${site.brand.name}</b><span>${site.brand.suffix}</span></a>
+    <a href="${hrefHome(root)}" class="logo"><b>${site.brand.name}</b><span>${site.brand.suffix}</span></a>
 
     <ul class="nav" id="nav">
       <li id="navSvc"><button aria-expanded="false">Услуги <span class="caret">▼</span></button></li>
-      ${list(site.nav, (n) => `<li><a href="${root}${n.href}">${n.label}</a></li>`)}
+      ${list(site.nav, (n) => `<li><a href="${hrefHome(root, n.href)}">${n.label}</a></li>`)}
     </ul>
 
     <div class="hdr-contact">
@@ -88,12 +108,12 @@ const mmenu = (root) => `<nav class="mmenu" id="mmenu">
   <div class="grp" id="mgrp">
     <button>Услуги <i>+</i></button>
     <div class="sub"><div>
-      ${list(cats, (c) => `<a href="${root}#dir">${c.title}</a>`)}
-      <a href="${root}#signature">Авторские протоколы</a>
+      ${list(cats, (c) => `<a href="${hrefHome(root, '#dir')}">${c.title}</a>`)}
+      <a href="${hrefHome(root, '#signature')}">Авторские протоколы</a>
     </div></div>
   </div>
-  ${list(site.nav, (n) => `<a href="${root}${n.href}">${n.label}</a>`)}
-  <a href="${root}#gift">Сертификат</a>
+  ${list(site.nav, (n) => `<a href="${hrefHome(root, n.href)}">${n.label}</a>`)}
+  <a href="${hrefHome(root, '#gift')}">Сертификат</a>
   <div class="mmenu-foot">
     <button class="btn" data-book>Записаться</button>
     <a class="btn btn-w" href="${tel}">${C.phone}</a>
@@ -109,26 +129,26 @@ const mmenu = (root) => `<nav class="mmenu" id="mmenu">
 const footer = (root) => `<footer class="ftr">
   <div class="wrap ftr-in">
     <div>
-      <a href="${root || '#'}" class="logo" style="margin-bottom:14px"><b>${site.brand.name}</b><span>${site.brand.suffix}</span></a>
+      <a href="${hrefHome(root)}" class="logo" style="margin-bottom:14px"><b>${site.brand.name}</b><span>${site.brand.suffix}</span></a>
       <p style="font-size:14.5px; color:var(--muted); line-height:1.6; margin:0">
         Косметический кабинет в ${C.city}е.<br>Уход за лицом и телом, обучение массажу.</p>
     </div>
     <div>
       <h5>Услуги</h5>
-      ${list(cats, (c) => `<a class="lnk" href="${root}#dir">${c.title}</a>`)}
-      <a class="lnk" href="${root}#signature">Авторские протоколы</a>
+      ${list(cats, (c) => `<a class="lnk" href="${hrefHome(root, '#dir')}">${c.title}</a>`)}
+      <a class="lnk" href="${hrefHome(root, '#signature')}">Авторские протоколы</a>
     </div>
     <div>
       <h5>Кабинет</h5>
-      <a class="lnk" href="${root}#about">О мастере</a><a class="lnk" href="${root}#results">Результаты</a>
-      <a class="lnk" href="${root}#reviews">Отзывы</a><a class="lnk" href="${root}#edu">Обучение</a>
-      <a class="lnk" href="${root}#gift">Сертификат</a>
+      <a class="lnk" href="${hrefHome(root, '#about')}">О мастере</a><a class="lnk" href="${hrefHome(root, '#results')}">Результаты</a>
+      <a class="lnk" href="${hrefHome(root, '#reviews')}">Отзывы</a><a class="lnk" href="${hrefHome(root, '#edu')}">Обучение</a>
+      <a class="lnk" href="${hrefHome(root, '#gift')}">Сертификат</a>
     </div>
     <div>
       <h5>Контакты</h5>
       <a class="lnk" href="${tel}">${C.phone}</a>
-      <a class="lnk" href="${root}#contacts">${C.address}</a>
-      <a class="lnk" href="${root}#contacts">${C.hoursShort}</a>
+      <a class="lnk" href="${hrefHome(root, '#contacts')}">${C.address}</a>
+      <a class="lnk" href="${hrefHome(root, '#contacts')}">${C.hoursShort}</a>
       <a class="lnk" href="${C.telegram}" target="_blank" rel="noopener">Telegram</a>
       <a class="lnk" href="${C.viber}">Viber</a>
     </div>
@@ -253,7 +273,7 @@ const indexBody = `<!-- ============ HERO ============ -->
     </div>
     <div class="hero-media">
       <div class="hero-ph">
-        <div class="frame ph"><div class="ph"></div></div>
+        <div class="frame ph">${pic(H.photo, { alt: H.photoAlt || H.h1, w: 940, h: 1175, eager: true })}</div>
         <div class="hero-stats" id="heroStats">
 ${list(H.stats, (s) => `          <div><b data-to="${s.to}"${s.suffix ? ` data-suf="${s.suffix}"` : ''}${s.decimals ? ` data-dec="${s.decimals}"` : ''}>0</b><span>${s.label}</span></div>`)}
         </div>
@@ -344,7 +364,7 @@ ${list(procsOf(c.id), (p) => `        <div class="row"><div><a class="nm" href="
 <!-- ============ О МАСТЕРЕ ============ -->
 <section class="sec" id="about" style="background:var(--soft)">
   <div class="wrap about">
-    <div class="im ph rv"><div class="ph"></div></div>
+    <div class="im ph rv">${pic(site.about.photo, { alt: site.about.photoAlt || site.about.name, w: 600, h: 750 })}</div>
     <div class="rv bio">
       <p class="eyebrow">${site.about.eyebrow}</p>
       <h2 class="sec-h">${site.about.name}</h2>
@@ -413,7 +433,7 @@ ${strip(site.strips[1])}
 <section class="edu" id="edu">
   <div class="wrap edu-in">
     <div class="rv">
-      <div class="im ph"><div class="ph"></div><span class="bdg">${site.education.badge}</span></div>
+      <div class="im ph">${pic(site.education.photo, { alt: site.education.title, w: 900, h: 620 })}<span class="bdg">${site.education.badge}</span></div>
       <div class="edu-side">
         <div class="edu-flow">
           <span class="lb">${site.education.flow.label}</span>
@@ -479,7 +499,7 @@ ${list(site.gift.items, (i) => `        <li>${i}</li>`)}
     <p class="eyebrow rv">${site.gallery.eyebrow}</p>
     <h2 class="sec-h rv" style="margin-bottom:26px">${site.gallery.title}</h2>
     <div class="gal">
-      ${site.gallery.photos.map((p) => `<div class="ph rv"><div class="ph${ph(p)}"></div></div>`).join('\n      ')}
+      ${site.gallery.photos.map((p, i) => `<div class="ph rv">${pic(p, { alt: `${site.gallery.eyebrow} — фото ${i + 1}`, w: 900, h: 900 })}</div>`).join('\n      ')}
     </div>
   </div>
 </section>
@@ -588,9 +608,9 @@ function procedurePage(p) {
 
   const body = `<!-- ============ ХЛЕБНЫЕ КРОШКИ ============ -->
 <div class="wrap crumbs">
-  <a href="${root}">Главная</a><span>→</span>
-  <a href="${root}#services">Услуги</a><span>→</span>
-  <a href="${root}#dir">${c.title}</a><span>→</span>
+  <a href="${hrefHome(root)}">Главная</a><span>→</span>
+  <a href="${hrefHome(root, '#services')}">Услуги</a><span>→</span>
+  <a href="${hrefHome(root, '#dir')}">${c.title}</a><span>→</span>
   <span style="color:var(--ink); opacity:1">${p.title}</span>
 </div>
 
@@ -602,11 +622,10 @@ function procedurePage(p) {
     <p class="proc-lead">${p.lead}</p>
 
     <div class="proc-gal">
-      <div class="main ph"><div class="ph"></div></div>
+      <div class="main ph">${pic(p.photoCover, { root, alt: p.titleFull || p.title, w: 1400, h: 875, eager: true })}</div>
       <div class="thumbs">
-        <div class="ph"><div class="ph b"></div></div>
-        <div class="ph"><div class="ph c"></div></div>
-        <div class="ph"><div class="ph d"></div></div>
+${list((p.gallery && p.gallery.length ? p.gallery : ['b', 'c', 'd']), (g, i) =>
+  `        <div class="ph">${pic(g, { root, alt: `${p.title} — фото ${i + 1}`, w: 600, h: 450 })}</div>`)}
       </div>
     </div>
   </div>
@@ -661,7 +680,7 @@ ${list(p.indications, (i) => `      <li>${i}</li>`)}
     <p class="eyebrow rv">Ход процедуры</p>
     <h2 class="sec-h rv" style="margin-bottom:30px">Как проходит — ${['один','два','три','четыре','пять','шесть'][p.stages.length - 1]} этап${p.stages.length > 4 ? 'ов' : 'а'}</h2>
     <div class="stage-grid">
-${list(p.stages, (s, i) => `      <div class="stage rv"><div class="im"><div class="ph${ph(s.photo)}"></div><span class="n">${i + 1}</span></div>
+${list(p.stages, (s, i) => `      <div class="stage rv"><div class="im">${pic(s.photo, { root, alt: `${p.title}, этап ${i + 1}: ${s.title}`, w: 1000, h: 625 })}<span class="n">${i + 1}</span></div>
         <div class="bd"><h3>${s.title}</h3>
           <p>${s.text}</p></div></div>`)}
     </div>
@@ -755,6 +774,9 @@ const dist = join(ROOT, 'dist');
 rmSync(dist, { recursive: true, force: true });
 mkdirSync(dist, { recursive: true });
 cpSync(join(ROOT, 'src/assets'), join(dist, 'assets'), { recursive: true });
+if (existsSync(join(ROOT, 'src/images'))) {
+  cpSync(join(ROOT, 'src/images'), join(dist, 'images'), { recursive: true });
+}
 
 writeFileSync(join(dist, 'index.html'), layout({
   title: `Косметический кабинет ${site.brand.name} Beauty в ${site.contacts.city}е — чистки, пилинги, массаж лица`,
@@ -779,3 +801,17 @@ if (todo.length) {
 }
 const noPage = db.procedures.filter((p) => !p.page).length;
 console.log(`\nБез собственной страницы: ${noPage} — ведут на якорь #dir`);
+
+const slots = [
+  ['Первый экран', site.hero.photo],
+  ['О мастере', site.about.photo],
+  ['Обучение', site.education.photo],
+  ...site.gallery.photos.map((v, i) => [`Кабинет ${i + 1}`, v]),
+  ...pages.flatMap((p) => [
+    [`${p.title}: обложка`, p.photoCover],
+    ...p.stages.map((s, i) => [`${p.title}: этап ${i + 1}`, s.photo]),
+  ]),
+];
+const empty = slots.filter(([, v]) => !isFile(v));
+console.log(`\nФото: ${slots.length - empty.length} из ${slots.length} на месте, ${empty.length} — заглушки`);
+if (LOCAL) console.log('\nЛокальная сборка: ссылки ведут на index.html, откроется с диска');

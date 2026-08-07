@@ -730,3 +730,20 @@ button{font:inherit; cursor:pointer; border:0; background:none; color:inherit}
 .ph-img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block}
 .hero-ph .frame .ph-img,.gal .ph-img,.stage .im .ph-img,.proc-gal .ph-img{border-radius:inherit}
 .about .im .ph-img,.edu .im .ph-img{border-radius:inherit}
+
+/* ---------- БЛОК «О МАСТЕРЕ»: ТЕКСТ ---------- */
+.bio-role{font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--hl);
+  margin:0 0 14px; font-weight:500}
+.bio-lead{font-size:16.5px; line-height:1.72; color:var(--ink-2); max-width:50ch; margin:0}
+.brands{margin-top:22px}
+.brands-lb{display:block; font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--muted); margin-bottom:9px}
+.brands-row{display:flex; gap:8px; flex-wrap:wrap}
+.brand-chip{font-size:13.5px; background:var(--surface); border:1px solid var(--line-2);
+  border-radius:99px; padding:7px 15px; color:var(--ink-2); white-space:nowrap;
+  transition:border-color .3s var(--ease), color .3s}
+.brand-chip:hover{border-color:var(--hl); color:var(--ink)}
+.bio-quote{margin:24px 0 0; padding:2px 0 2px 20px; border-left:2px solid var(--gold);
+  font-family:"Playfair Display",Georgia,serif; font-size:19px; line-height:1.55;
+  color:var(--ink); max-width:44ch}
+@media (min-width:900px){ .bio-quote{font-size:20px} }

@@ -368,9 +368,16 @@ ${list(procsOf(c.id), (p) => `        <div class="row"><div><a class="nm" href="
     <div class="rv bio">
       <p class="eyebrow">${site.about.eyebrow}</p>
       <h2 class="sec-h">${site.about.name}</h2>
-      <p style="color:var(--ink-2); font-size:15.5px; line-height:1.68; max-width:56ch; margin:0">
-        ${site.about.bio}
-      </p>
+      <p class="bio-role">${site.about.role}</p>
+      <p class="bio-lead">${site.about.lead}</p>
+
+      <div class="brands">
+        <span class="brands-lb">${site.about.brandsLabel}</span>
+        <div class="brands-row">${site.about.brands.map((b) => `<span class="brand-chip">${b}</span>`).join('')}</div>
+      </div>
+
+      <blockquote class="bio-quote">${site.about.quote}</blockquote>
+
       <div class="docs">
         ${site.about.docs.map((d) => `<span class="doc">${d}</span>`).join('')}
       </div>

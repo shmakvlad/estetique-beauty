@@ -1,0 +1,10 @@
+{
+  "name": "estetique-beauty",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Сайт косметического кабинета Estétique Beauty",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs"
+  }
+}

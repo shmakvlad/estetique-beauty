@@ -1,0 +1,169 @@
+{
+  "_note": "Единственный источник правды по услугам. Меняете здесь — обновляется на всех страницах. После правки: npm run build",
+  "_priceTodo": "Поля с \"priceTodo\": true — цены, которых не было в исходном прайсе. Проверьте и уберите флаг.",
+
+  "categories": [
+    {
+      "id": "chistki",
+      "title": "Чистки",
+      "titleMega": "Чистки",
+      "capMega": "Лицо",
+      "photo": "c",
+      "order": 1,
+      "cardOrder": 3
+    },
+    {
+      "id": "pilingi",
+      "title": "Пилинги",
+      "titleMega": "Пилинги",
+      "capMega": "Лицо",
+      "photo": "b",
+      "order": 2,
+      "cardOrder": 2
+    },
+    {
+      "id": "massazh",
+      "title": "Массаж",
+      "titleMega": "Массаж",
+      "capMega": "Лицо и тело",
+      "photo": "",
+      "order": 3,
+      "cardOrder": 1
+    },
+    {
+      "id": "omolozhenie",
+      "title": "Омолаживающие процедуры",
+      "titleDir": "Омолаживающие<br>процедуры",
+      "titleMega": "Омоложение",
+      "capMega": "Лицо",
+      "photo": "d",
+      "order": 4,
+      "cardOrder": 4
+    }
+  ],
+
+  "procedures": [
+    {
+      "slug": "glubokoe-ochishchenie-kozhi",
+      "category": "chistki",
+      "title": "Глубокое очищение кожи",
+      "titleFull": "Глубокое очищение кожи Ultraceuticals",
+      "subtitle": "Гигиеническая чистка лица, 90 минут",
+      "price": 180,
+      "duration": 90,
+      "inMega": true,
+      "signature": true,
+      "signatureText": "Комбинация ультразвука, ручной проработки и финишного ухода в одном сеансе. Без покраснения на несколько дней после.",
+      "photo": "",
+      "page": true,
+      "meta": {
+        "title": "Глубокое очищение кожи Ultraceuticals в Минске — 180 BYN | Estétique Beauty",
+        "description": "Гигиеническая чистка лица Ultraceuticals 90 минут за 180 BYN. Показания, этапы процедуры, противопоказания, подготовка и уход. Минск, пр-т Победителей 141."
+      },
+      "lead": "Гигиеническая чистка лица на 90 минут: возвращает коже чистоту и свежесть. Работаю премиум-косметикой Ultraceuticals — австралийским брендом с активными ингредиентами, разработанным на основе научных исследований. Это не только очищение: в процедуру входят массаж, специальные маски и тоники.",
+      "specs": [
+        { "label": "Длительность", "value": "90 минут" },
+        { "label": "Курс", "value": "4–6 процедур" },
+        { "label": "Периодичность", "value": "раз в 1–2 месяца" },
+        { "label": "Эффект", "value": "до 2 месяцев" },
+        { "label": "Восстановление", "value": "не требуется" },
+        { "label": "Косметика", "value": "Ultraceuticals" }
+      ],
+      "indicationsLead": "Если узнали свою кожу хотя бы в двух пунктах — процедура для вас.",
+      "indications": [
+        "Расширенные поры и чёрные точки",
+        "Комедоны и единичные воспаления",
+        "Жирный блеск, который возвращается к обеду",
+        "Тусклый, сероватый тон лица",
+        "Неровный рельеф и шероховатость",
+        "Кожа плохо принимает уход — средства «лежат сверху»"
+      ],
+      "tags": ["акне", "комедоны", "жирная кожа", "тусклый тон", "расширенные поры"],
+      "beforeAfterNote": "через 24 часа после сеанса",
+      "stages": [
+        { "title": "Глубокое очищение", "text": "Снимаю макияж и загрязнения средствами Ultraceuticals, подобранными под тип кожи.", "photo": "" },
+        { "title": "Пилинг", "text": "Отшелушиваю мёртвые клетки и раскрываю поры — без этого экстракция травматична.", "photo": "b" },
+        { "title": "Экстракция", "text": "Удаляю чёрные точки и комедоны безопасными методами, дозируя нагрузку на кожу.", "photo": "c" },
+        { "title": "Восстановление", "text": "Успокаивающая маска, массаж и увлажняющие средства — кожа уходит спокойной.", "photo": "d" }
+      ],
+      "advantagesTitle": "Что отличает эту чистку",
+      "advantages": [
+        { "icon": "spark", "title": "Косметика премиум-класса", "text": "Ultraceuticals — австралийский бренд с активными ингредиентами, созданный на основе научных исследований." },
+        { "icon": "leaf", "title": "Комплексный подход", "text": "Не только очищение: в сеанс входят массаж, специальные маски и тоники." },
+        { "icon": "user", "title": "Индивидуальный подбор", "text": "Перед процедурой — консультация: подбираю методику и средства под конкретный тип кожи." },
+        { "icon": "shield", "title": "Долговременный эффект", "text": "После сеанса кожа увлажнённая, гладкая и сияющая — результат держится до двух месяцев." }
+      ],
+      "contraindications": [
+        "Беременность и период лактации",
+        "Обострение герпеса",
+        "Острые воспаления и гнойничковые высыпания",
+        "Купероз в активной фазе",
+        "Аллергия на компоненты средств",
+        "Свежий загар — солнечный или в солярии",
+        "Приём изотретиноина и ретиноидов внутрь"
+      ],
+      "contraindicationsNote": "Список не исчерпывающий. На консультации собираю анамнез — часть ограничений снимается заменой протокола на щадящий.",
+      "prepare": [
+        "Отменить кислоты, ретинол и скрабы",
+        "Исключить солярий и активное солнце",
+        "Не планировать важных встреч на следующие сутки"
+      ],
+      "aftercare": [
+        "Не трогать лицо руками и не выдавливать",
+        "Без сауны, бассейна и интенсивных тренировок",
+        "Санскрин SPF 30+ каждое утро",
+        "Только мягкое очищение и увлажнение"
+      ],
+      "careNote": "Полную памятку пришлю в мессенджер сразу после записи."
+    },
+
+    { "slug": "detoks-ochishchenie-lica", "category": "chistki", "title": "Детокс-очищение лица", "price": 120, "duration": 90, "inMega": true },
+    { "slug": "kombinirovannaya-chistka", "category": "chistki", "title": "Комбинированная чистка", "price": 150, "duration": 75, "inMega": true },
+    { "slug": "ultrazvukovaya-chistka", "category": "chistki", "title": "Ультразвуковая чистка", "price": 120, "duration": 45, "inMega": true },
+    { "slug": "atravmatichnaya-chistka", "category": "chistki", "title": "Атравматичная чистка", "price": 130, "duration": 60, "priceTodo": true },
+
+    {
+      "slug": "piling-prx-t33",
+      "category": "pilingi",
+      "title": "Пилинг PRX-T33",
+      "price": 170,
+      "priceFrom": true,
+      "duration": 45,
+      "inMega": true,
+      "signature": true,
+      "signatureText": "Срединное воздействие без периода восстановления и без запрета на солнце. Работает с пигментацией, постакне и тусклым тоном.",
+      "photo": "b"
+    },
+    { "slug": "biorepeel", "category": "pilingi", "title": "Biorepeel", "price": 180, "duration": 45, "inMega": true },
+    { "slug": "mindalnyy-piling", "category": "pilingi", "title": "Миндальный пилинг", "price": 150, "duration": 45, "inMega": true },
+    { "slug": "molochnyy-piling", "category": "pilingi", "title": "Молочный пилинг", "price": 150, "duration": 45, "priceTodo": true },
+    { "slug": "sredinnyy-piling", "category": "pilingi", "title": "Срединный пилинг", "price": 180, "duration": 45, "priceTodo": true },
+    { "slug": "karbonovyy-piling", "category": "pilingi", "title": "Карбоновый пилинг", "price": 160, "duration": 60, "inMega": true },
+
+    { "slug": "plasticheskiy-massazh-lica", "category": "massazh", "title": "Пластический массаж лица", "titleMega": "Пластический лица", "price": 90, "duration": 60, "inMega": true },
+    { "slug": "metabolicheskiy-massazh", "category": "massazh", "title": "Метаболический массаж", "price": 90, "duration": 60 },
+    { "slug": "miolifting-massazh", "category": "massazh", "title": "Миолифтинговый массаж", "titleMega": "Миолифтинговый", "price": 90, "duration": 60, "inMega": true },
+    { "slug": "transbukkalnyy-massazh", "category": "massazh", "title": "Трансбуккальный массаж", "price": 90, "duration": 60 },
+    { "slug": "massazh-shvz", "category": "massazh", "title": "Массаж шейно-воротниковой зоны", "titleMega": "Шейно-воротниковый", "price": 60, "duration": 40, "inMega": true },
+    { "slug": "massazh-spiny-i-tela", "category": "massazh", "title": "Массаж спины и тела", "titleMega": "Спины и тела", "price": 130, "duration": 90, "inMega": true },
+    { "slug": "limfodrenazhnyy-massazh", "category": "massazh", "title": "Лимфодренажный массаж", "price": 80, "duration": 45, "priceTodo": true },
+
+    { "slug": "ultraceuticals-intensiv", "category": "omolozhenie", "title": "Интенсивный уход Ultraceuticals", "titleMega": "Уход Ultraceuticals", "price": 165, "duration": 90, "inMega": true },
+    { "slug": "ultraceuticals-express", "category": "omolozhenie", "title": "Экспресс-уход Ultraceuticals", "price": 120, "duration": 60 },
+    { "slug": "diego-dalla-palma-lifting", "category": "omolozhenie", "title": "Лифтинг-программа Diego dalla Palma", "titleMega": "Diego dalla Palma", "price": 130, "duration": 90, "inMega": true },
+    {
+      "slug": "neinvazivnaya-biorevitalizaciya",
+      "category": "omolozhenie",
+      "title": "Неинвазивная биоревитализация",
+      "titleMega": "Биоревитализация",
+      "price": 160,
+      "duration": 60,
+      "inMega": true,
+      "signature": true,
+      "signatureText": "Насыщение кожи гиалуроновой кислотой без единого прокола. Подходит тем, кто боится инъекций, и как экспресс-подготовка перед событием.",
+      "photo": "c"
+    },
+    { "slug": "biorevitalizaciya-dermapen", "category": "omolozhenie", "title": "Биоревитализация дермапен", "titleMega": "Дермапен", "price": 160, "duration": 60, "inMega": true },
+    { "slug": "mikronidling", "category": "omolozhenie", "title": "Микронидлинг", "price": 170, "duration": 60, "priceTodo": true }
+  ]
+}

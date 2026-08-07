@@ -2,7 +2,7 @@
 
 **Дата:** 7 августа 2026
 **Статус:** утверждено, прототип собран
-**Прототип:** `prototype/index.html`, `prototype/chistka-lica.html`
+**Прототип:** `dist/` — собирается из `data/*.json` командой `npm run build`
 
 ---
 

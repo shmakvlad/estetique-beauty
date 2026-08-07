@@ -80,7 +80,7 @@ const header = (root) => `<header class="hdr" id="hdr">
     </ul>
 
     <div class="hdr-contact">
-      <a class="hdr-tel" href="${tel}">${icon('phone')}${C.phone}</a>
+      <a class="hdr-tel" href="${tel}"><span class="ico">${icon('phone')}</span>${C.phone}</a>
       <button class="btn" data-book>Записаться</button>
       <button class="burger" id="burger" aria-label="Меню"><i></i><i></i><i></i></button>
     </div>

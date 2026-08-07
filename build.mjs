@@ -478,9 +478,11 @@ ${list(site.education.courses, (c) => `      <div class="crs">
 <!-- ============ СЕРТИФИКАТ ============ -->
 <section class="gift" id="gift">
   <div class="wrap gift-in">
-    <div class="gift-card rv">
-      <div class="gift-frame"><b>${site.brand.name}</b><span>${site.brand.suffix}</span>
-        <div class="amt">ПОДАРОЧНЫЙ СЕРТИФИКАТ</div></div>
+    <div class="gift-card rv${isFile(site.gift.photo) ? ' has-photo' : ''}">
+      ${isFile(site.gift.photo)
+        ? pic(site.gift.photo, { alt: site.gift.photoAlt || site.gift.title, w: 900, h: 900 })
+        : `<div class="gift-frame"><b>${site.brand.name}</b><span>${site.brand.suffix}</span>
+        <div class="amt">ПОДАРОЧНЫЙ СЕРТИФИКАТ</div></div>`}
     </div>
     <div class="rv">
       <p class="eyebrow">${site.gift.eyebrow}</p>
@@ -813,6 +815,7 @@ const slots = [
   ['Первый экран', site.hero.photo],
   ['О мастере', site.about.photo],
   ['Обучение', site.education.photo],
+  ['Сертификат', site.gift.photo],
   ...site.gallery.photos.map((v, i) => [`Кабинет ${i + 1}`, v]),
   ...pages.flatMap((p) => [
     [`${p.title}: обложка`, p.photoCover],

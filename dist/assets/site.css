@@ -747,3 +747,8 @@ button{font:inherit; cursor:pointer; border:0; background:none; color:inherit}
   font-family:"Playfair Display",Georgia,serif; font-size:19px; line-height:1.55;
   color:var(--ink); max-width:44ch}
 @media (min-width:900px){ .bio-quote{font-size:20px} }
+
+/* ---------- СЕРТИФИКАТ: СВОЁ ИЗОБРАЖЕНИЕ ---------- */
+.gift-card.has-photo{aspect-ratio:auto; background:none; box-shadow:none; display:block}
+.gift-card.has-photo .ph-img{position:static; width:100%; height:auto;
+  border-radius:var(--r-lg); box-shadow:0 14px 34px rgba(44,38,34,.14)}

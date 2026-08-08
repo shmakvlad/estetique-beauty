@@ -615,15 +615,6 @@ ${list(
             <div class="fld"><label for="f-tel">Телефон или мессенджер</label>
               <input id="f-tel" type="tel" required placeholder="+375 __ ___-__-__"></div>
           </div>
-          <div class="fld-row">
-            <div class="fld"><label for="f-svc">Услуга</label>
-              <select id="f-svc">
-                <option value="">Выберите направление</option>
-                ${site.booking.serviceOptions.map((o) => `<option>${o}</option>`).join('')}
-              </select></div>
-            <div class="fld"><label for="f-when">Желаемое время</label>
-              <input id="f-when" placeholder="Например: будни после 18:00"></div>
-          </div>
           <button class="btn" type="submit" style="width:100%">${site.booking.cta}</button>
           <p class="consent">${site.booking.consent}</p>
         </form>

@@ -9,7 +9,9 @@
       "titleMega": "Чистки",
       "capMega": "Лицо",
       "photo": "03_chistki.webp",
+      "photoPos": "",
       "photoDir": "",
+      "photoDirPos": "",
       "order": 1,
       "cardOrder": 3
     },
@@ -19,7 +21,9 @@
       "titleMega": "Пилинги",
       "capMega": "Лицо",
       "photo": "02_piling.webp",
+      "photoPos": "",
       "photoDir": "",
+      "photoDirPos": "",
       "order": 2,
       "cardOrder": 2
     },
@@ -29,7 +33,9 @@
       "titleMega": "Массаж",
       "capMega": "Лицо и тело",
       "photo": "01_massazh.webp",
+      "photoPos": "",
       "photoDir": "",
+      "photoDirPos": "",
       "order": 3,
       "cardOrder": 1
     },
@@ -40,7 +46,9 @@
       "titleMega": "Омоложение",
       "capMega": "Лицо",
       "photo": "04_omolazhivayushchie.webp",
+      "photoPos": "center 22%",
       "photoDir": "",
+      "photoDirPos": "",
       "order": 4,
       "cardOrder": 4
     }
@@ -834,5 +842,5 @@
       "priceTodo": true
     }
   ],
-  "_photos": "У категории два фото: photo — карточка в блоке «Что мы делаем» (горизонтальная), photoDir — таблица в «Направления и процедуры» (вертикальная). Если photoDir пуст, берётся photo."
+  "_photos": "У категории два фото: photo — карточка в блоке «Что мы делаем» (широкая), photoDir — таблица в «Направления и процедуры» (вертикальная). Если photoDir пуст, берётся photo. photoPos и photoDirPos задают, какая часть снимка остаётся видимой при обрезке: \"center 22%\" поднимает кадр вверх, \"center 75%\" опускает вниз, также работают top, bottom, left, right."
 }

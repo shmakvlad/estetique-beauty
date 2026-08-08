@@ -41,11 +41,13 @@ const list = (a, f) => a.map(f).join('\n');
 // Фото из src/images или градиентная заглушка, если файла ещё нет.
 // В data достаточно указать имя файла: "photo": "mariya.webp"
 const isFile = (v) => typeof v === 'string' && /\.(webp|jpg|jpeg|png|avif)$/i.test(v);
-function pic(photo, { root = '', alt = '', cls = '', w, h, eager = false } = {}) {
+function pic(photo, { root = '', alt = '', cls = '', w, h, eager = false, pos = '' } = {}) {
   if (isFile(photo)) {
     const size = w && h ? ` width="${w}" height="${h}"` : '';
     const load = eager ? ' fetchpriority="high"' : ' loading="lazy" decoding="async"';
-    return `<img class="ph-img${cls ? ' ' + cls : ''}" src="${root}images/${photo}" alt="${alt}"${size}${load}>`;
+    // pos — какая часть снимка остаётся видимой при обрезке: "center 25%", "top", "left center"
+    const style = pos ? ` style="object-position:${pos}"` : '';
+    return `<img class="ph-img${cls ? ' ' + cls : ''}" src="${root}images/${photo}" alt="${alt}"${size}${load}${style}>`;
   }
   return `<div class="ph${ph(photo)}"></div>`;
 }
@@ -295,7 +297,7 @@ ${list(H.stats, (s) => `          <div><b data-to="${s.to}"${s.suffix ? ` data-s
 
     <div class="cat-grid">
 ${list(catsByCard, (c) => `      <div class="cat rv">
-        <div class="im">${pic(c.photo, { alt: c.title, w: 1200, h: 800 })}</div>
+        <div class="im">${pic(c.photo, { alt: c.title, w: 1200, h: 800, pos: c.photoPos })}</div>
         <div class="bd">
           <h3>${c.title}</h3><div class="rule"></div>
           <ul>
@@ -339,7 +341,7 @@ ${list(signature, (p) => `      <a class="sig rv" href="${link(p, '')}">
     <h2 class="sec-h rv" style="margin-bottom:30px">${site.directions.title}</h2>
 
 ${list(cats, (c) => `    <div class="dir rv">
-      <div class="im">${pic(c.photoDir || c.photo, { cls: 'in', alt: c.title, w: 1200, h: 800 })}<div class="ph-grad"></div><span class="cap">${c.titleDir || c.title}</span></div>
+      <div class="im">${pic(c.photoDir || c.photo, { cls: 'in', alt: c.title, w: 1200, h: 800, pos: c.photoDirPos || c.photoPos })}<div class="ph-grad"></div><span class="cap">${c.titleDir || c.title}</span></div>
       <div>
 ${list(procsOf(c.id), (p) => `        <div class="row"><div><a class="nm" href="${link(p, '')}">${p.title}</a><div class="du">${p.duration} мин</div></div>
           <div class="pr">${money(p)}</div><button class="bk" data-book data-svc="${p.title}">Записаться</button></div>`)}

@@ -830,5 +830,7 @@ button.chip{border:0; cursor:pointer; transition:background .3s var(--ease), col
 button.chip:hover{background:#E5DCCE}
 button.chip.on{background:var(--dark); color:var(--bg)}
 
-/* окно шторки не должно вырастать на весь экран при вертикальной пропорции */
-.ba{max-height:min(78vh, 680px); margin-inline:auto}
+/* Окно шторки не должно вырастать на весь экран при вертикальной пропорции.
+   width:100% обязателен: все дети позиционированы абсолютно, и без явной ширины
+   блок считает её по содержимому — то есть нулевой. */
+.ba{width:100%; max-height:min(78vh, 680px)}

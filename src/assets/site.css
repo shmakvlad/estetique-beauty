@@ -871,3 +871,11 @@ button.chip.on{background:var(--dark); color:var(--bg)}
   .call-row{grid-template-columns:1fr}
   .msg-grid.three .cbtn{padding:12px 6px; font-size:12.5px}
 }
+
+/* ---------- АВАТАРЫ В ОТЗЫВАХ ---------- */
+.ava{position:relative; display:flex; align-items:center; justify-content:center}
+.ava i{font-style:normal; font-family:"Playfair Display",Georgia,serif; font-size:19px;
+  color:rgba(255,255,255,.92); line-height:1; user-select:none}
+.ava.has-img{background:none}
+.ava.has-img .ph-img{border-radius:50%}
+.edu-quote .ava i{font-size:15px}

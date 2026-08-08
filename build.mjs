@@ -54,6 +54,13 @@ function pic(photo, { root = '', alt = '', cls = '', w, h, eager = false, pos = 
   return `<div class="ph${ph(photo)}"></div>`;
 }
 
+// Аватар: фото, если указан файл, иначе первая буква имени на градиенте —
+// брать чужие фото из профилей без разрешения нельзя, инициал выглядит осознанно.
+const avatar = (src, name, root = '') =>
+  isFile(src)
+    ? `<span class="ava has-img">${pic(src, { root, alt: name, w: 120, h: 120 })}</span>`
+    : `<span class="ava${ph(src)}"><i>${(name || '').trim().charAt(0)}</i></span>`;
+
 // ——— иконки ———
 const sprite = `<svg style="display:none">
   <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></symbol>
@@ -510,7 +517,7 @@ ${list(
   site.reviews.items,
   (r) => `      <div class="rev rv"><div class="stars">${'★'.repeat(r.stars)}</div>
         <p>${r.text}</p>
-        <div class="who"><span class="ava${ph(r.avatar)}"></span><div><div class="nm">${r.name}</div><div class="src">${r.source}</div></div></div></div>`
+        <div class="who">${avatar(r.avatar, r.name)}<div><div class="nm">${r.name}</div><div class="src">${r.source}</div></div></div></div>`
 )}
     </div>
   </div>
@@ -546,7 +553,7 @@ ${strip(site.strips[1])}
         </div>
         <div class="edu-quote">
           <p>${site.education.quote.text}</p>
-          <div class="who"><span class="ava"></span><div><div class="nm">${site.education.quote.name}</div>
+          <div class="who">${avatar(site.education.quote.avatar, site.education.quote.name)}<div><div class="nm">${site.education.quote.name}</div>
             <div class="src">${site.education.quote.source}</div></div></div>
         </div>
       </div>
@@ -954,6 +961,7 @@ const slots = [
   ['О мастере', site.about.photo],
   ['Обучение', site.education.photo],
   ['Сертификат', site.gift.photo],
+  ...site.reviews.items.map((r) => [`Отзыв: ${r.name}`, r.avatar]),
   ...cats.map((c) => [`Направление: ${c.title} — карточка`, c.photo]),
   ...cats.map((c) => [`Направление: ${c.title} — таблица`, c.photoDir || c.photo]),
   ...site.gallery.photos.map((v, i) => [`Кабинет ${i + 1}`, v]),

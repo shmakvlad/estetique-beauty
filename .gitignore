@@ -1,2 +1,6 @@
 .superpowers/
 .DS_Store
+node_modules/
+
+# результат сборки — восстанавливается командой npm run build
+dist/

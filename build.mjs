@@ -339,7 +339,7 @@ ${list(signature, (p) => `      <a class="sig rv" href="${link(p, '')}">
     <h2 class="sec-h rv" style="margin-bottom:30px">${site.directions.title}</h2>
 
 ${list(cats, (c) => `    <div class="dir rv">
-      <div class="im">${pic(c.photo, { cls: 'in', alt: c.title, w: 1200, h: 800 })}<div class="ph-grad"></div><span class="cap">${c.titleDir || c.title}</span></div>
+      <div class="im">${pic(c.photoDir || c.photo, { cls: 'in', alt: c.title, w: 1200, h: 800 })}<div class="ph-grad"></div><span class="cap">${c.titleDir || c.title}</span></div>
       <div>
 ${list(procsOf(c.id), (p) => `        <div class="row"><div><a class="nm" href="${link(p, '')}">${p.title}</a><div class="du">${p.duration} мин</div></div>
           <div class="pr">${money(p)}</div><button class="bk" data-book data-svc="${p.title}">Записаться</button></div>`)}
@@ -816,7 +816,8 @@ const slots = [
   ['О мастере', site.about.photo],
   ['Обучение', site.education.photo],
   ['Сертификат', site.gift.photo],
-  ...cats.map((c) => [`Направление: ${c.title}`, c.photo]),
+  ...cats.map((c) => [`Направление: ${c.title} — карточка`, c.photo]),
+  ...cats.map((c) => [`Направление: ${c.title} — таблица`, c.photoDir || c.photo]),
   ...site.gallery.photos.map((v, i) => [`Кабинет ${i + 1}`, v]),
   ...pages.flatMap((p) => [
     [`${p.title}: обложка`, p.photoCover],

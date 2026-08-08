@@ -95,7 +95,7 @@
     "brandsLabel": "Работаю на косметике",
     "brands": ["Ultraceuticals", "Diego dalla Palma", "Genosys"],
     "quote": "Не назначаю лишнего. Если задачу решает домашний уход — так и скажу.",
-    "docs": ["s1.jpg", "s2.webp", "s3.jpeg", "s4.jpg"],
+    "docs": ["s1.webp", "s2.webp", "s3.webp", "s4.webp"],
     "qualificationTitle": "Образование и квалификация",
     "qualification": [
       {

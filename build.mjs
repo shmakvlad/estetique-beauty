@@ -654,12 +654,17 @@ ${list(
       <p class="eyebrow">${site.booking.eyebrow}</p>
       <h2>${site.booking.title}</h2>
       <p class="lead">${site.booking.lead}</p>
-      <a class="cbtn-row" href="${tel}">
-        <span class="ic">${icon('phone')}</span>
-        <span><span class="lb">Позвонить</span><span class="vl">${C.phone}</span></span>
-      </a>
-      <div class="msg-grid">
-        ${msgButtons()}
+      <div class="call-row">
+        <a class="cbtn-row" href="${tel}">
+          <span class="ic">${icon('phone')}</span>
+          <span><span class="lb">Позвонить</span><span class="vl">${C.phone}</span></span>
+        </a>
+        <a class="cbtn ig" href="${attr(C.instagram)}" target="_blank" rel="noopener">${icon('ig')}Instagram</a>
+      </div>
+      <div class="msg-grid three">
+        <a class="cbtn tg" href="${C.telegram}" target="_blank" rel="noopener">${icon('tg')}Telegram</a>
+        <a class="cbtn wa" href="${attr(C.whatsapp)}" target="_blank" rel="noopener">${icon('wa')}WhatsApp</a>
+        <a class="cbtn vb" href="${C.viber}">${icon('viber')}Viber</a>
       </div>
       <p class="note">${site.booking.note}</p>
     </div>

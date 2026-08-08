@@ -861,3 +861,13 @@ button.chip.on{background:var(--dark); color:var(--bg)}
   .hero-actions{grid-template-columns:1fr}
   .hero-actions>*{grid-column:1/-1}
 }
+
+/* ---------- БЫСТРАЯ ЗАПИСЬ: РЯД КОНТАКТОВ ---------- */
+.call-row{display:grid; grid-template-columns:minmax(0,1.7fr) minmax(0,1fr); gap:10px; align-items:stretch}
+.call-row .cbtn-row{margin:0}
+.call-row .cbtn{min-height:100%}
+.msg-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:520px){
+  .call-row{grid-template-columns:1fr}
+  .msg-grid.three .cbtn{padding:12px 6px; font-size:12.5px}
+}

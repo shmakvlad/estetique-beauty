@@ -4,3 +4,4 @@ node_modules/
 
 # результат сборки — восстанавливается командой npm run build
 dist/
+originals/

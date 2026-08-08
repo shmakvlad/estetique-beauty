@@ -56,7 +56,7 @@
             "linkHref": "#services",
             "text": "Действует скидка <b>10%</b> для новых клиентов на косметологические уходы"
         },
-        "photo": "main.jpg",
+        "photo": "main.webp",
         "photoAlt": "Косметолог проводит процедуру ухода за лицом"
     },
     "services": {
@@ -223,7 +223,7 @@
     "gift": {
         "eyebrow": "Подарок",
         "title": "Подарочный сертификат",
-        "photo": "sertificate.jpg",
+        "photo": "sertificate.webp",
         "photoAlt": "Подарочный сертификат Estétique Beauty",
         "lead": "Когда не знаешь, что подарить, но точно хочешь порадовать. Получатель сам выбирает процедуру — ошибиться невозможно.",
         "items": [
@@ -241,18 +241,18 @@
         "eyebrow": "Кабинет",
         "title": "Где всё происходит",
         "photos": [
-            "g0.jpg",
-            "g1.jpg",
-            "g4.jpg",
-            "g5.jpg",
-            "g11.jpg",
-            "g17.jpg",
-            "g9.jpg",
-            "g10.jpg",
-            "g12.jpg",
-            "g6.jpg",
-            "g7.jpg",
-            "g15.jpg"
+            "g0.webp",
+            "g1.webp",
+            "g4.webp",
+            "g5.webp",
+            "g11.webp",
+            "g17.webp",
+            "g9.webp",
+            "g10.webp",
+            "g12.webp",
+            "g6.webp",
+            "g7.webp",
+            "g15.webp"
         ],
         "photoAlt": "Фото кабинета косметолога"
     },

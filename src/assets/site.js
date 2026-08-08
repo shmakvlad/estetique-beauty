@@ -291,9 +291,15 @@
   });
 
   document.getElementById('lbX').addEventListener('click', close);
-  document.getElementById('lbPrev').addEventListener('click', function () { show(idx - 1); });
-  document.getElementById('lbNext').addEventListener('click', function () { show(idx + 1); });
-  lb.addEventListener('click', function (e) { if (e.target === lb || e.target.classList.contains('lb-fig')) close(); });
+  document.getElementById('lbPrev').addEventListener('click', function () {
+    show(idx - 1);
+  });
+  document.getElementById('lbNext').addEventListener('click', function () {
+    show(idx + 1);
+  });
+  lb.addEventListener('click', function (e) {
+    if (e.target === lb || e.target.classList.contains('lb-fig')) close();
+  });
 
   addEventListener('keydown', function (e) {
     if (!lb.classList.contains('on')) return;
@@ -304,11 +310,40 @@
 
   // перелистывание пальцем
   var x0 = null;
-  lb.addEventListener('pointerdown', function (e) { x0 = e.clientX; });
+  lb.addEventListener('pointerdown', function (e) {
+    x0 = e.clientX;
+  });
   lb.addEventListener('pointerup', function (e) {
     if (x0 === null) return;
     var dx = e.clientX - x0;
     x0 = null;
     if (Math.abs(dx) > 50) show(idx + (dx < 0 ? 1 : -1));
+  });
+})();
+
+/* ---------- ПЕРЕКЛЮЧЕНИЕ ПАР «ДО/ПОСЛЕ» ---------- */
+(function () {
+  var tabs = document.getElementById('baTabs');
+  var before = document.getElementById('baBefore');
+  var after = document.getElementById('baAfter');
+  if (!tabs || !before || !after) return;
+
+  tabs.addEventListener('click', function (e) {
+    var b = e.target.closest('.ba-tab');
+    if (!b) return;
+    tabs.querySelectorAll('.ba-tab').forEach(function (x) {
+      x.classList.remove('on');
+    });
+    b.classList.add('on');
+    var bi = before.querySelector('img');
+    var ai = after.querySelector('img');
+    if (bi) bi.src = b.dataset.before;
+    if (ai) ai.src = b.dataset.after;
+  });
+
+  // соседние пары подгружаем заранее
+  tabs.querySelectorAll('.ba-tab').forEach(function (b) {
+    new Image().src = b.dataset.before;
+    new Image().src = b.dataset.after;
   });
 })();

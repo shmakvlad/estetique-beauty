@@ -272,13 +272,35 @@ const strip = (s) => `<section class="strip">
 </section>`;
 
 // ——— блок «до/после» ———
-const beforeAfter = (note) => `<div class="ba rv" id="ba">
-      <div class="after"></div>
-      <div class="before" id="baBefore"></div>
+// pairs: [{ label, before, after }] — если файлов нет, остаётся градиентная заглушка
+const realPairs = (pairs) => (pairs || []).filter((p) => isFile(p.before) && isFile(p.after));
+
+const beforeAfter = (pairs = [], root = '') => {
+  const ok = realPairs(pairs);
+  const first = ok[0];
+  return `<div class="ba rv" id="ba">
+      <div class="after" id="baAfter">${first ? `<img src="${root}images/${first.after}" alt="После процедуры" loading="lazy" decoding="async">` : ''}</div>
+      <div class="before" id="baBefore">${first ? `<img src="${root}images/${first.before}" alt="До процедуры" loading="lazy" decoding="async">` : ''}</div>
       <div class="hd" id="baHandle"><span class="kn">↔</span></div>
       <span class="tg" style="left:12px">ДО</span>
       <span class="tg" style="right:12px">ПОСЛЕ</span>
     </div>`;
+};
+
+// подписи-переключатели: если пар с фото несколько, ими листают
+const baTabs = (pairs, fallback, root = '') => {
+  const ok = realPairs(pairs);
+  if (ok.length < 2) {
+    const labels = ok.length === 1 ? [ok[0].label] : fallback || [];
+    return labels.map((t) => `<span class="chip">${t}</span>`).join('');
+  }
+  return ok
+    .map(
+      (p, i) =>
+        `<button class="chip ba-tab${i ? '' : ' on'}" data-before="${root}images/${p.before}" data-after="${root}images/${p.after}">${p.label}</button>`
+    )
+    .join('');
+};
 
 // ═══════════════════ ГЛАВНАЯ ═══════════════════
 const H = site.hero;
@@ -396,9 +418,9 @@ ${list(
       <p class="eyebrow">${site.results.eyebrow}</p>
       <h2 class="sec-h">${site.results.title}</h2>
       <p class="sec-sub" style="margin-bottom:20px">${site.results.lead}</p>
-      <div class="chips">${site.results.tags.map((t) => `<span class="chip">${t}</span>`).join('')}</div>
+      <div class="chips" id="baTabs">${baTabs(site.results.pairs, site.results.tags)}</div>
     </div>
-    ${beforeAfter()}
+    ${beforeAfter(site.results.pairs)}
   </div>
 </section>
 
@@ -752,9 +774,9 @@ ${list(p.indications, (i) => `      <li>${i}</li>`)}
       <h2 class="sec-h">До и после одной процедуры</h2>
       <p class="sec-sub" style="margin-bottom:20px">Один и тот же свет, ракурс и расстояние, без ретуши
         и фильтров. Фото публикуются с согласия клиентов. Потяните ползунок, чтобы сравнить.</p>
-      <div class="chips"><span class="chip">${p.beforeAfterNote}</span></div>
+      <div class="chips" id="baTabs">${baTabs(p.beforeAfter, [p.beforeAfterNote], root)}</div>
     </div>
-    ${beforeAfter()}
+    ${beforeAfter(p.beforeAfter, root)}
   </div>
 </section>
 
@@ -916,6 +938,8 @@ const slots = [
     ...p.stages.map((s, i) => [`${p.title}: этап ${i + 1}`, s.photo]),
   ]),
 ];
+const baCount = realPairs(site.results.pairs).length;
 const empty = slots.filter(([, v]) => !isFile(v));
 console.log(`\nФото: ${slots.length - empty.length} из ${slots.length} на месте, ${empty.length} — заглушки`);
+console.log(`Пар «до/после» на главной: ${baCount || 'ни одной — показывается заглушка'}`);
 if (LOCAL) console.log('\nЛокальная сборка: ссылки ведут на index.html, откроется с диска');

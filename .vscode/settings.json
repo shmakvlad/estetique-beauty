@@ -1,0 +1,23 @@
+{
+  // Текст сайта на русском. Предупреждения про «неоднозначные» символы
+  // (кириллическая «с» неотличима от латинской «c», тире от дефиса)
+  // здесь срабатывают на каждом слове и мешают.
+  "editor.unicodeHighlight.ambiguousCharacters": false,
+  "editor.unicodeHighlight.invisibleCharacters": false,
+  "editor.unicodeHighlight.nonBasicASCII": false,
+
+  // dist собирается автоматически и перезаписывается целиком.
+  // Только для чтения, чтобы правки туда не уходили впустую
+  // и автоформат не раздувал файлы.
+  "files.readonlyInclude": { "dist/**": true },
+
+  // В поиске по проекту не нужны ни сборка, ни исходники фотографий
+  "search.exclude": {
+    "dist/**": true,
+    "originals/**": true,
+    "node_modules/**": true
+  },
+
+  "files.eol": "\n",
+  "[json]": { "editor.formatOnSave": false }
+}

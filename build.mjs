@@ -68,7 +68,9 @@ const sprite = `<svg style="display:none">
 </svg>`;
 
 const icon = (n) => `<svg><use href="#i-${n}"/></svg>`;
-const msgButtons = (extra = '') => `<a class="cbtn tg" href="${C.telegram}" target="_blank" rel="noopener">${icon('tg')}Telegram</a>
+const msgButtons = (
+  extra = ''
+) => `<a class="cbtn tg" href="${C.telegram}" target="_blank" rel="noopener">${icon('tg')}Telegram</a>
         <a class="cbtn vb" href="${C.viber}">${icon('viber')}Viber</a>${extra}`;
 
 // ——— общие части ———
@@ -90,11 +92,17 @@ const header = (root) => `<header class="hdr" id="hdr">
 
   <div class="mega" id="mega">
     <div class="mega-in">
-${list(cats, (c) => `      <div>
+${list(
+  cats,
+  (c) => `      <div>
         <span class="cap">${c.capMega}</span><h5>${c.titleMega}</h5>
-${list(procsOf(c.id).filter((p) => p.inMega), (p) =>
-  `        <a class="item" href="${link(p, root)}">${p.titleMega || p.title} <em>${moneyShort(p)}</em></a>`)}
-      </div>`)}
+${list(
+  procsOf(c.id).filter((p) => p.inMega),
+  (p) =>
+    `        <a class="item" href="${link(p, root)}">${p.titleMega || p.title} <em>${moneyShort(p)}</em></a>`
+)}
+      </div>`
+)}
       <div class="mega-feat">
         <div class="ph d"><div class="ph-grad"></div><span class="cap-abs">${site.megaFeature.caption}</span></div>
         <div class="bd">
@@ -230,9 +238,11 @@ ${modal()}
 
 // ——— контактные полосы ———
 const stripValue = (type) =>
-  type === 'phone' ? `<a href="${tel}">${C.phone}</a>`
-  : type === 'address' ? `<span class="v">${C.address}</span>`
-  : `<span class="v">${C.hoursShort}</span>`;
+  type === 'phone'
+    ? `<a href="${tel}">${C.phone}</a>`
+    : type === 'address'
+      ? `<span class="v">${C.address}</span>`
+      : `<span class="v">${C.hoursShort}</span>`;
 
 const strip = (s) => `<section class="strip">
   <div class="wrap strip-in">
@@ -240,9 +250,11 @@ const strip = (s) => `<section class="strip">
       <div><span class="lb">${s.label}</span>${stripValue(s.type)}</div></div>
     <div class="strip-i"><span class="ic">${icon(s.icon2)}</span>
       <div><span class="lb">${s.label2}</span>${stripValue(s.type2)}</div></div>
-    ${s.ctaType === 'book'
-      ? `<button class="btn" data-book>${s.cta}</button>`
-      : `<a class="btn" href="${C.telegram}" target="_blank" rel="noopener">${s.cta}</a>`}
+    ${
+      s.ctaType === 'book'
+        ? `<button class="btn" data-book>${s.cta}</button>`
+        : `<a class="btn" href="${C.telegram}" target="_blank" rel="noopener">${s.cta}</a>`
+    }
   </div>
 </section>`;
 
@@ -296,7 +308,9 @@ ${list(H.stats, (s) => `          <div><b data-to="${s.to}"${s.suffix ? ` data-s
     <p class="sec-sub rv">${site.services.lead}</p>
 
     <div class="cat-grid">
-${list(catsByCard, (c) => `      <div class="cat rv">
+${list(
+  catsByCard,
+  (c) => `      <div class="cat rv">
         <div class="im">${pic(c.photo, { alt: c.title, w: 1200, h: 800, pos: c.photoPos })}</div>
         <div class="bd">
           <h3>${c.title}</h3><div class="rule"></div>
@@ -306,7 +320,8 @@ ${list(procsOf(c.id), (p) => `            <li><a href="${link(p, '')}">${p.title
           <div class="ft"><span class="pr">от <b>${minPrice(c.id)} BYN</b></span>
             <a class="arrow" href="#dir" aria-label="Все процедуры направления">${icon('ar')}</a></div>
         </div>
-      </div>`)}
+      </div>`
+)}
     </div>
   </div>
 </section>
@@ -321,7 +336,9 @@ ${strip(site.strips[0])}
     <p class="sec-sub rv">${site.signature.lead}</p>
 
     <div class="sig-grid">
-${list(signature, (p) => `      <a class="sig rv" href="${link(p, '')}">
+${list(
+  signature,
+  (p) => `      <a class="sig rv" href="${link(p, '')}">
         <div class="im">${pic(p.photo, { alt: p.title, w: 1200, h: 515 })}<span class="tagm">${site.signature.badge}</span></div>
         <div class="bd">
           <h3>${p.title}</h3>
@@ -329,7 +346,8 @@ ${list(signature, (p) => `      <a class="sig rv" href="${link(p, '')}">
           <div class="ft"><span class="pr">${money(p)} · ${p.duration} мин</span>
             <span class="arrow">${icon('ar')}</span></div>
         </div>
-      </a>`)}
+      </a>`
+)}
     </div>
   </div>
 </section>
@@ -340,13 +358,21 @@ ${list(signature, (p) => `      <a class="sig rv" href="${link(p, '')}">
     <p class="eyebrow rv">${site.directions.eyebrow}</p>
     <h2 class="sec-h rv" style="margin-bottom:30px">${site.directions.title}</h2>
 
-${list(cats, (c) => `    <div class="dir rv">
+${list(
+  cats,
+  (c) => `    <div class="dir rv">
       <div class="im">${pic(c.photoDir || c.photo, { cls: 'in', alt: c.title, w: 1200, h: 800, pos: c.photoDirPos || c.photoPos })}<div class="ph-grad"></div><span class="cap">${c.titleDir || c.title}</span></div>
       <div>
-${list(procsOf(c.id), (p) => `        <div class="row"><div><a class="nm" href="${link(p, '')}">${p.title}</a><div class="du">${p.duration} мин</div></div>
-          <div class="pr">${money(p)}</div><button class="bk" data-book data-svc="${p.title}">Записаться</button></div>`)}
+${list(
+  procsOf(c.id),
+  (
+    p
+  ) => `        <div class="row"><div><a class="nm" href="${link(p, '')}">${p.title}</a><div class="du">${p.duration} мин</div></div>
+          <div class="pr">${money(p)}</div><button class="bk" data-book data-svc="${p.title}">Записаться</button></div>`
+)}
       </div>
-    </div>`)}
+    </div>`
+)}
   </div>
 </section>
 
@@ -388,8 +414,11 @@ ${list(procsOf(c.id), (p) => `        <div class="row"><div><a class="nm" href="
     <div class="qual rv">
       <h3>${site.about.qualificationTitle}</h3>
       <ul class="tl">
-${list(site.about.qualification, (q) => `        <li><span class="yr">${q.year}</span>
-          <p>${q.text}</p></li>`)}
+${list(
+  site.about.qualification,
+  (q) => `        <li><span class="yr">${q.year}</span>
+          <p>${q.text}</p></li>`
+)}
       </ul>
     </div>
   </div>
@@ -417,9 +446,12 @@ ${list(site.about.qualification, (q) => `        <li><span class="yr">${q.year}<
       </div>
     </div>
     <div class="rev-grid">
-${list(site.reviews.items, (r) => `      <div class="rev rv"><div class="stars">${'★'.repeat(r.stars)}</div>
+${list(
+  site.reviews.items,
+  (r) => `      <div class="rev rv"><div class="stars">${'★'.repeat(r.stars)}</div>
         <p>${r.text}</p>
-        <div class="who"><span class="ava${ph(r.avatar)}"></span><div><div class="nm">${r.name}</div><div class="src">${r.source}</div></div></div></div>`)}
+        <div class="who"><span class="ava${ph(r.avatar)}"></span><div><div class="nm">${r.name}</div><div class="src">${r.source}</div></div></div></div>`
+)}
     </div>
   </div>
 </section>
@@ -430,8 +462,11 @@ ${list(site.reviews.items, (r) => `      <div class="rev rv"><div class="stars">
     <p class="eyebrow rv">${site.visit.eyebrow}</p>
     <h2 class="sec-h rv" style="margin-bottom:28px">${site.visit.title}</h2>
     <div class="steps">
-${list(site.visit.steps, (s, i) => `      <div class="step rv"><span class="n">${i + 1}</span><div><h4>${s.title}</h4>
-        <p>${s.text}</p></div></div>`)}
+${list(
+  site.visit.steps,
+  (s, i) => `      <div class="step rv"><span class="n">${i + 1}</span><div><h4>${s.title}</h4>
+        <p>${s.text}</p></div></div>`
+)}
     </div>
   </div>
 </section>
@@ -461,7 +496,9 @@ ${strip(site.strips[1])}
       <h2>${site.education.title}</h2>
       <p class="lead">${site.education.lead}</p>
 
-${list(site.education.courses, (c) => `      <div class="crs">
+${list(
+  site.education.courses,
+  (c) => `      <div class="crs">
         <div>
           <h4>${c.title}</h4>
           <p class="m">${c.text}</p>
@@ -469,7 +506,8 @@ ${list(site.education.courses, (c) => `      <div class="crs">
         </div>
         <div class="rt"><span class="pr">${c.price} BYN</span>
           <button class="btn" data-book data-svc="Курс «${c.title}»">Записаться</button></div>
-      </div>`)}
+      </div>`
+)}
 
       <p style="font-size:12.5px; color:#8A7F73; margin:14px 0 0">
         ${site.education.note}</p>
@@ -481,10 +519,12 @@ ${list(site.education.courses, (c) => `      <div class="crs">
 <section class="gift" id="gift">
   <div class="wrap gift-in">
     <div class="gift-card rv${isFile(site.gift.photo) ? ' has-photo' : ''}">
-      ${isFile(site.gift.photo)
-        ? pic(site.gift.photo, { alt: site.gift.photoAlt || site.gift.title, w: 900, h: 900 })
-        : `<div class="gift-frame"><b>${site.brand.name}</b><span>${site.brand.suffix}</span>
-        <div class="amt">ПОДАРОЧНЫЙ СЕРТИФИКАТ</div></div>`}
+      ${
+        isFile(site.gift.photo)
+          ? pic(site.gift.photo, { alt: site.gift.photoAlt || site.gift.title, w: 900, h: 900 })
+          : `<div class="gift-frame"><b>${site.brand.name}</b><span>${site.brand.suffix}</span>
+        <div class="amt">ПОДАРОЧНЫЙ СЕРТИФИКАТ</div></div>`
+      }
     </div>
     <div class="rv">
       <p class="eyebrow">${site.gift.eyebrow}</p>
@@ -521,9 +561,12 @@ ${list(site.gift.items, (i) => `        <li>${i}</li>`)}
     <p class="eyebrow rv">${site.why.eyebrow}</p>
     <h2 class="sec-h rv" style="margin-bottom:30px">${site.why.title}</h2>
     <div class="why-grid">
-${list(site.why.items, (w) => `      <div class="why rv"><span class="ic">${icon(w.icon)}</span>
+${list(
+  site.why.items,
+  (w) => `      <div class="why rv"><span class="ic">${icon(w.icon)}</span>
         <h3>${w.title}</h3>
-        <p>${w.text}</p></div>`)}
+        <p>${w.text}</p></div>`
+)}
     </div>
   </div>
 </section>
@@ -534,8 +577,11 @@ ${list(site.why.items, (w) => `      <div class="why rv"><span class="ic">${icon
     <p class="eyebrow rv">${site.faq.eyebrow}</p>
     <h2 class="sec-h rv" style="margin-bottom:20px">${site.faq.title}</h2>
     <div id="faq">
-${list(site.faq.items, (f) => `      <div class="faq-i"><button class="faq-q">${f.q}<i>+</i></button>
-        <div class="faq-a"><div><p>${f.a}</p></div></div></div>`)}
+${list(
+  site.faq.items,
+  (f) => `      <div class="faq-i"><button class="faq-q">${f.q}<i>+</i></button>
+        <div class="faq-a"><div><p>${f.a}</p></div></div></div>`
+)}
     </div>
   </div>
 </section>
@@ -614,7 +660,9 @@ ${list(C.hours, (h) => `            <li><span>${h.days}</span><b>${h.time}</b></
 function procedurePage(p) {
   const c = cat(p.category);
   const root = '../../';
-  const related = procsOf(p.category).filter((x) => x.slug !== p.slug).slice(0, 3);
+  const related = procsOf(p.category)
+    .filter((x) => x.slug !== p.slug)
+    .slice(0, 3);
   const svc = `${p.titleFull || p.title} · ${p.duration} мин · ${money(p)}`;
 
   const body = `<!-- ============ ХЛЕБНЫЕ КРОШКИ ============ -->
@@ -635,8 +683,11 @@ function procedurePage(p) {
     <div class="proc-gal">
       <div class="main ph">${pic(p.photoCover, { root, alt: p.titleFull || p.title, w: 1400, h: 875, eager: true })}</div>
       <div class="thumbs">
-${list((p.gallery && p.gallery.length ? p.gallery : ['b', 'c', 'd']), (g, i) =>
-  `        <div class="ph">${pic(g, { root, alt: `${p.title} — фото ${i + 1}`, w: 600, h: 450 })}</div>`)}
+${list(
+  p.gallery && p.gallery.length ? p.gallery : ['b', 'c', 'd'],
+  (g, i) =>
+    `        <div class="ph">${pic(g, { root, alt: `${p.title} — фото ${i + 1}`, w: 600, h: 450 })}</div>`
+)}
       </div>
     </div>
   </div>
@@ -689,11 +740,17 @@ ${list(p.indications, (i) => `      <li>${i}</li>`)}
 <section class="sec">
   <div class="wrap">
     <p class="eyebrow rv">Ход процедуры</p>
-    <h2 class="sec-h rv" style="margin-bottom:30px">Как проходит — ${['один','два','три','четыре','пять','шесть'][p.stages.length - 1]} этап${p.stages.length > 4 ? 'ов' : 'а'}</h2>
+    <h2 class="sec-h rv" style="margin-bottom:30px">Как проходит — ${['один', 'два', 'три', 'четыре', 'пять', 'шесть'][p.stages.length - 1]} этап${p.stages.length > 4 ? 'ов' : 'а'}</h2>
     <div class="stage-grid">
-${list(p.stages, (s, i) => `      <div class="stage rv"><div class="im">${pic(s.photo, { root, alt: `${p.title}, этап ${i + 1}: ${s.title}`, w: 1000, h: 625 })}<span class="n">${i + 1}</span></div>
+${list(
+  p.stages,
+  (
+    s,
+    i
+  ) => `      <div class="stage rv"><div class="im">${pic(s.photo, { root, alt: `${p.title}, этап ${i + 1}: ${s.title}`, w: 1000, h: 625 })}<span class="n">${i + 1}</span></div>
         <div class="bd"><h3>${s.title}</h3>
-          <p>${s.text}</p></div></div>`)}
+          <p>${s.text}</p></div></div>`
+)}
     </div>
   </div>
 </section>
@@ -704,9 +761,12 @@ ${list(p.stages, (s, i) => `      <div class="stage rv"><div class="im">${pic(s.
     <p class="eyebrow rv">Особенности</p>
     <h2 class="sec-h rv" style="margin-bottom:30px">${p.advantagesTitle}</h2>
     <div class="adv-grid">
-${list(p.advantages, (a) => `      <div class="adv rv"><span class="ic">${icon(a.icon)}</span>
+${list(
+  p.advantages,
+  (a) => `      <div class="adv rv"><span class="ic">${icon(a.icon)}</span>
         <div><h3>${a.title}</h3>
-          <p>${a.text}</p></div></div>`)}
+          <p>${a.text}</p></div></div>`
+)}
     </div>
   </div>
 </section>
@@ -745,7 +805,7 @@ ${list(p.aftercare, (i) => `          <li>${i}</li>`)}
   <div class="wrap">
     <div class="book-slim rv">
       <div>
-        <h2>Записаться на ${(p.title[0].toLowerCase() + p.title.slice(1))}</h2>
+        <h2>Записаться на ${p.title[0].toLowerCase() + p.title.slice(1)}</h2>
         <p>Оставьте заявку или напишите в мессенджер — согласуем удобное время. ${money(p)}, ${p.duration} минут.</p>
       </div>
       <div class="row">
@@ -762,11 +822,16 @@ ${list(p.aftercare, (i) => `          <li>${i}</li>`)}
     <p class="eyebrow rv">Другие процедуры направления</p>
     <h2 class="sec-h rv" style="margin-bottom:28px">Похожие процедуры</h2>
     <div class="sig-grid">
-${list(related, (r) => `      <a class="sig rv" href="${link(r, root)}"><div class="im">${pic(r.photo, { root, alt: r.title, w: 1200, h: 515 })}</div>
+${list(
+  related,
+  (
+    r
+  ) => `      <a class="sig rv" href="${link(r, root)}"><div class="im">${pic(r.photo, { root, alt: r.title, w: 1200, h: 515 })}</div>
         <div class="bd"><h3>${r.title}</h3>
           <p>${r.signatureText || `Процедура направления «${c.title}». Подробности и показания уточню на консультации.`}</p>
           <div class="ft"><span class="pr">${money(r)} · ${r.duration} мин</span>
-            <span class="arrow">${icon('ar')}</span></div></div></a>`)}
+            <span class="arrow">${icon('ar')}</span></div></div></a>`
+)}
     </div>
   </div>
 </section>
@@ -789,12 +854,15 @@ if (existsSync(join(ROOT, 'src/images'))) {
   cpSync(join(ROOT, 'src/images'), join(dist, 'images'), { recursive: true });
 }
 
-writeFileSync(join(dist, 'index.html'), layout({
-  title: `Косметический кабинет ${site.brand.name} Beauty в ${site.contacts.city}е — чистки, пилинги, массаж лица`,
-  description: `${site.hero.lead} ${C.address}. Запись: ${C.phone}.`,
-  root: '',
-  body: indexBody,
-}));
+writeFileSync(
+  join(dist, 'index.html'),
+  layout({
+    title: `Косметический кабинет ${site.brand.name} Beauty в ${site.contacts.city}е — чистки, пилинги, массаж лица`,
+    description: `${site.hero.lead} ${C.address}. Запись: ${C.phone}.`,
+    root: '',
+    body: indexBody,
+  })
+);
 
 for (const p of pages) {
   const dir = join(dist, 'uslugi', p.slug);

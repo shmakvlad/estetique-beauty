@@ -295,7 +295,7 @@ ${list(H.stats, (s) => `          <div><b data-to="${s.to}"${s.suffix ? ` data-s
 
     <div class="cat-grid">
 ${list(catsByCard, (c) => `      <div class="cat rv">
-        <div class="im"><div class="ph${ph(c.photo)}"></div></div>
+        <div class="im">${pic(c.photo, { alt: c.title, w: 1200, h: 800 })}</div>
         <div class="bd">
           <h3>${c.title}</h3><div class="rule"></div>
           <ul>
@@ -320,7 +320,7 @@ ${strip(site.strips[0])}
 
     <div class="sig-grid">
 ${list(signature, (p) => `      <a class="sig rv" href="${link(p, '')}">
-        <div class="im"><div class="ph${ph(p.photo)}"></div><span class="tagm">${site.signature.badge}</span></div>
+        <div class="im">${pic(p.photo, { alt: p.title, w: 1200, h: 515 })}<span class="tagm">${site.signature.badge}</span></div>
         <div class="bd">
           <h3>${p.title}</h3>
           <p>${p.signatureText}</p>
@@ -339,7 +339,7 @@ ${list(signature, (p) => `      <a class="sig rv" href="${link(p, '')}">
     <h2 class="sec-h rv" style="margin-bottom:30px">${site.directions.title}</h2>
 
 ${list(cats, (c) => `    <div class="dir rv">
-      <div class="im"><div class="in ph${ph(c.photo)}"></div><div class="ph-grad"></div><span class="cap">${c.titleDir || c.title}</span></div>
+      <div class="im">${pic(c.photo, { cls: 'in', alt: c.title, w: 1200, h: 800 })}<div class="ph-grad"></div><span class="cap">${c.titleDir || c.title}</span></div>
       <div>
 ${list(procsOf(c.id), (p) => `        <div class="row"><div><a class="nm" href="${link(p, '')}">${p.title}</a><div class="du">${p.duration} мин</div></div>
           <div class="pr">${money(p)}</div><button class="bk" data-book data-svc="${p.title}">Записаться</button></div>`)}
@@ -760,7 +760,7 @@ ${list(p.aftercare, (i) => `          <li>${i}</li>`)}
     <p class="eyebrow rv">Другие процедуры направления</p>
     <h2 class="sec-h rv" style="margin-bottom:28px">Похожие процедуры</h2>
     <div class="sig-grid">
-${list(related, (r) => `      <a class="sig rv" href="${link(r, root)}"><div class="im"><div class="ph${ph(r.photo)}"></div></div>
+${list(related, (r) => `      <a class="sig rv" href="${link(r, root)}"><div class="im">${pic(r.photo, { root, alt: r.title, w: 1200, h: 515 })}</div>
         <div class="bd"><h3>${r.title}</h3>
           <p>${r.signatureText || `Процедура направления «${c.title}». Подробности и показания уточню на консультации.`}</p>
           <div class="ft"><span class="pr">${money(r)} · ${r.duration} мин</span>
@@ -816,6 +816,7 @@ const slots = [
   ['О мастере', site.about.photo],
   ['Обучение', site.education.photo],
   ['Сертификат', site.gift.photo],
+  ...cats.map((c) => [`Направление: ${c.title}`, c.photo]),
   ...site.gallery.photos.map((v, i) => [`Кабинет ${i + 1}`, v]),
   ...pages.flatMap((p) => [
     [`${p.title}: обложка`, p.photoCover],

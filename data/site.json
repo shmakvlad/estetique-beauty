@@ -95,7 +95,7 @@
     "brandsLabel": "Работаю на косметике",
     "brands": ["Ultraceuticals", "Diego dalla Palma", "Genosys"],
     "quote": "Не назначаю лишнего. Если задачу решает домашний уход — так и скажу.",
-    "docs": ["sert.jpg", "sert.jpg", "sert.jpg", "серт.", "+4"],
+    "docs": ["sert.webp"],
     "qualificationTitle": "Образование и квалификация",
     "qualification": [
       {
@@ -219,7 +219,7 @@
       }
     ],
     "note": "Дату ближайшего потока уточните в Telegram или по телефону. Возможна оплата в две части.",
-    "photo": "obuch.jpg"
+    "photo": "obuch.webp"
   },
   "gift": {
     "eyebrow": "Подарок",

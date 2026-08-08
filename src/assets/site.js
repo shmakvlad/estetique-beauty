@@ -240,3 +240,75 @@
   submit(document.getElementById('mForm'), document.getElementById('mOk'));
   submit(document.getElementById('bookForm'), document.getElementById('bookOk'));
 })();
+
+/* ---------- ПРОСМОТРЩИК ИЗОБРАЖЕНИЙ ---------- */
+(function () {
+  var lb = document.getElementById('lb');
+  if (!lb) return;
+  var img = document.getElementById('lbImg');
+  var counter = document.getElementById('lbCount');
+  var items = [];
+  var idx = 0;
+  var opener = null;
+
+  function show(i) {
+    idx = (i + items.length) % items.length;
+    var a = items[idx];
+    img.src = a.getAttribute('href');
+    img.alt = (a.querySelector('img') || {}).alt || '';
+    counter.textContent = idx + 1 + ' / ' + items.length;
+    lb.classList.toggle('single', items.length < 2);
+    // подгружаем соседей заранее, чтобы перелистывание было мгновенным
+    [items[(idx + 1) % items.length], items[(idx - 1 + items.length) % items.length]].forEach(function (n) {
+      if (n) new Image().src = n.getAttribute('href');
+    });
+  }
+
+  function open(group, i, from) {
+    items = [].slice.call(document.querySelectorAll('[data-lb="' + group + '"]'));
+    if (!items.length) return;
+    opener = from || null;
+    show(i);
+    lb.classList.add('on');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('lbX').focus();
+  }
+
+  function close() {
+    lb.classList.remove('on');
+    document.body.style.overflow = '';
+    if (opener) opener.focus();
+  }
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-lb]');
+    if (a) {
+      e.preventDefault();
+      var group = a.getAttribute('data-lb');
+      var all = [].slice.call(document.querySelectorAll('[data-lb="' + group + '"]'));
+      open(group, all.indexOf(a), a);
+    }
+  });
+
+  document.getElementById('lbX').addEventListener('click', close);
+  document.getElementById('lbPrev').addEventListener('click', function () { show(idx - 1); });
+  document.getElementById('lbNext').addEventListener('click', function () { show(idx + 1); });
+  lb.addEventListener('click', function (e) { if (e.target === lb || e.target.classList.contains('lb-fig')) close(); });
+
+  addEventListener('keydown', function (e) {
+    if (!lb.classList.contains('on')) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowRight') show(idx + 1);
+    else if (e.key === 'ArrowLeft') show(idx - 1);
+  });
+
+  // перелистывание пальцем
+  var x0 = null;
+  lb.addEventListener('pointerdown', function (e) { x0 = e.clientX; });
+  lb.addEventListener('pointerup', function (e) {
+    if (x0 === null) return;
+    var dx = e.clientX - x0;
+    x0 = null;
+    if (Math.abs(dx) > 50) show(idx + (dx < 0 ? 1 : -1));
+  });
+})();

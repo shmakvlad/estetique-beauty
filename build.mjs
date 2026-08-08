@@ -206,6 +206,15 @@ const modal = () => `<div class="ov" id="ov">
   </div>
 </div>`;
 
+const lightbox =
+  () => `<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Просмотр изображения">
+  <button class="lb-btn lb-x" id="lbX" aria-label="Закрыть">✕</button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Предыдущее">‹</button>
+  <figure class="lb-fig"><img id="lbImg" src="" alt=""></figure>
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Следующее">›</button>
+  <div class="lb-count" id="lbCount"></div>
+</div>`;
+
 const layout = ({ title, description, root, body, canonical }) => `<!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -232,6 +241,8 @@ ${footer(root)}
 ${sticky()}
 
 ${modal()}
+
+${lightbox()}
 
 <script src="${root}assets/site.js"></script>
 </body>
@@ -409,7 +420,13 @@ ${list(
       <blockquote class="bio-quote">${site.about.quote}</blockquote>
 
       <div class="docs">
-        ${site.about.docs.map((d) => `<span class="doc">${d}</span>`).join('')}
+        ${site.about.docs
+          .map((d, i) =>
+            isFile(d)
+              ? `<a class="doc has-img" href="images/${d}" data-lb="docs" aria-label="Документ ${i + 1}, открыть крупно"><img src="images/${d}" alt="Диплом или сертификат ${i + 1}" loading="lazy" width="300" height="380"></a>`
+              : `<span class="doc">${d}</span>`
+          )
+          .join('')}
       </div>
     </div>
 

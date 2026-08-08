@@ -66,6 +66,8 @@ const sprite = `<svg style="display:none">
   <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.4-2.9 8.3-7 9.5C7.9 19.3 5 15.4 5 11V6z"/><path d="m9 11.8 2 2 4-4"/></symbol>
   <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M4.5 20c0-8 5-13 15.5-13 0 8-5 13-13 13H4.5z"/><path d="M9 15.5c2-3.2 4.6-5.3 8-6.8"/></symbol>
   <symbol id="i-chat" viewBox="0 0 24 24"><path d="M20 14.5a3 3 0 0 1-3 3H8.5L4.5 21V6a3 3 0 0 1 3-3H17a3 3 0 0 1 3 3z"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 2.7a9.3 9.3 0 0 0-8 14.1L2.8 21.2l4.5-1.2A9.3 9.3 0 1 0 12 2.7z"/><path d="M8.7 8.2c.3-.1.6 0 .8.3l.8 1.4c.1.3.1.6-.1.8l-.5.5c.6 1.2 1.6 2.2 2.8 2.8l.5-.5c.2-.2.5-.3.8-.1l1.4.8c.3.2.4.5.3.8-.3.9-1.2 1.4-2.1 1.2a8.6 8.6 0 0 1-6.1-6.1c-.2-.9.3-1.8 1.2-2.1z"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1"/></symbol>
   <symbol id="i-ar" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
 </svg>`;
 
@@ -163,6 +165,8 @@ const footer = (root) => `<footer class="ftr">
       <a class="lnk" href="${hrefHome(root, '#contacts')}">${C.hoursShort}</a>
       <a class="lnk" href="${C.telegram}" target="_blank" rel="noopener">Telegram</a>
       <a class="lnk" href="${C.viber}">Viber</a>
+      <a class="lnk" href="${attr(C.whatsapp)}" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="lnk" href="${attr(C.instagram)}" target="_blank" rel="noopener">Instagram</a>
     </div>
   </div>
   <div class="wrap"><div class="legal">
@@ -318,6 +322,24 @@ const indexBody = `<!-- ============ HERO ============ -->
         <button class="btn" data-book>${H.cta} <svg class="ar" width="17" height="17" style="stroke:#fff;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round"><use href="#i-ar"/></svg></button>
         ${msgButtons()}
       </div>
+      <div class="hero-extra">
+        <div class="hero-rev">
+          <span class="hero-rev-lb">${H.reviewsLabel} <i>★★★★★</i></span>
+          <div class="hero-rev-row">
+            <a class="bb bb-sm bb-103" href="${attr(site.reviews.platforms[0].url)}" target="_blank" rel="noopener">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="11.5" fill="#fff"/><circle cx="12" cy="12" r="9.6" fill="#D8443D"/>
+                <path d="M10.35 6.4h3.3v3.95h3.95v3.3H13.65V17.6h-3.3v-3.95H6.4v-3.3h3.95z" fill="#fff"/>
+              </svg>${site.reviews.platforms[0].label}</a>
+            <a class="bb bb-sm bb-relax" href="${attr(site.reviews.platforms[1].url)}" target="_blank" rel="noopener">${site.reviews.platforms[1].label}<i>${site.reviews.platforms[1].suffix}</i></a>
+          </div>
+        </div>
+        <div class="hero-msgs">
+          <a class="cbtn wa" href="${attr(C.whatsapp)}" target="_blank" rel="noopener">${icon('wa')}WhatsApp</a>
+          <a class="cbtn ig" href="${attr(C.instagram)}" target="_blank" rel="noopener">${icon('ig')}Instagram</a>
+        </div>
+      </div>
+
       <ul class="facts">
         ${list(H.facts, (f) => `<li>${f}</li>`)}
       </ul>

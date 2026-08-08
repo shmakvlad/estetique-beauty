@@ -15,7 +15,8 @@
     "city": "Минск",
     "telegram": "https://t.me/Maria_Torapava",
     "viber": "viber://chat?number=%2B375296113541",
-    "instagram": "https://instagram.com/",
+    "whatsapp": "https://api.whatsapp.com/send/?phone=375296113541&text&type=phone_number&app_absent=0",
+    "instagram": "https://www.instagram.com/esthetic_beauty.by",
     "mapLink": "https://yandex.by/maps/?text=Минск%2C%20проспект%20Победителей%20141",
     "mapEmbed": "https://yandex.by/map-widget/v1/?text=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA%2C%20%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82%20%D0%9F%D0%BE%D0%B1%D0%B5%D0%B4%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9%2C%20141&z=17",
     "hours": [
@@ -35,6 +36,7 @@
     "h1": "Профессиональный уход за кожей и массаж лица",
     "lead": "Подбираю процедуры с учётом состояния кожи, ваших целей и противопоказаний. Спокойная камерная атмосфера и персональное внимание.",
     "cta": "Записаться на консультацию",
+    "reviewsLabel": "Отзывы о нас",
     "facts": ["Профильное образование", "В косметологии с 2010 года", "Индивидуальный подбор"],
     "stats": [
       {
@@ -85,7 +87,7 @@
     "eyebrow": "Результаты",
     "title": "До и после",
     "lead": "Реальные клиенты, одинаковый свет и ракурс, без ретуши. Потяните ползунок, чтобы сравнить.",
-    "ratio": "3/4",
+    "ratio": "4/3",
     "pairs": [
       {
         "label": "Акне",

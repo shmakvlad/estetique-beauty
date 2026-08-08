@@ -318,26 +318,21 @@ const indexBody = `<!-- ============ HERO ============ -->
       <span class="badge">${icon('spark')}${H.badge}</span>
       <h1>${H.h1}</h1>
       <p class="lead">${H.lead}</p>
-      <div class="hero-cta">
+      <div class="hero-actions">
         <button class="btn" data-book>${H.cta} <svg class="ar" width="17" height="17" style="stroke:#fff;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round"><use href="#i-ar"/></svg></button>
-        ${msgButtons()}
-      </div>
-      <div class="hero-extra">
-        <div class="hero-rev">
-          <span class="hero-rev-lb">${H.reviewsLabel} <i>★★★★★</i></span>
-          <div class="hero-rev-row">
-            <a class="bb bb-sm bb-103" href="${attr(site.reviews.platforms[0].url)}" target="_blank" rel="noopener">
-              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
-                <circle cx="12" cy="12" r="11.5" fill="#fff"/><circle cx="12" cy="12" r="9.6" fill="#D8443D"/>
-                <path d="M10.35 6.4h3.3v3.95h3.95v3.3H13.65V17.6h-3.3v-3.95H6.4v-3.3h3.95z" fill="#fff"/>
-              </svg>${site.reviews.platforms[0].label}</a>
-            <a class="bb bb-sm bb-relax" href="${attr(site.reviews.platforms[1].url)}" target="_blank" rel="noopener">${site.reviews.platforms[1].label}<i>${site.reviews.platforms[1].suffix}</i></a>
-          </div>
+        <a class="cbtn tg" href="${C.telegram}" target="_blank" rel="noopener">${icon('tg')}Telegram</a>
+        <a class="cbtn vb" href="${C.viber}">${icon('viber')}Viber</a>
+
+        <div class="hero-rev-row">
+          <a class="bb bb-sm bb-103" href="${attr(site.reviews.platforms[0].url)}" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="11.5" fill="#fff"/><circle cx="12" cy="12" r="9.6" fill="#D8443D"/>
+              <path d="M10.35 6.4h3.3v3.95h3.95v3.3H13.65V17.6h-3.3v-3.95H6.4v-3.3h3.95z" fill="#fff"/>
+            </svg>${site.reviews.platforms[0].label}</a>
+          <a class="bb bb-sm bb-relax" href="${attr(site.reviews.platforms[1].url)}" target="_blank" rel="noopener">${site.reviews.platforms[1].label}<i>${site.reviews.platforms[1].suffix}</i></a>
         </div>
-        <div class="hero-msgs">
-          <a class="cbtn wa" href="${attr(C.whatsapp)}" target="_blank" rel="noopener">${icon('wa')}WhatsApp</a>
-          <a class="cbtn ig" href="${attr(C.instagram)}" target="_blank" rel="noopener">${icon('ig')}Instagram</a>
-        </div>
+        <a class="cbtn wa" href="${attr(C.whatsapp)}" target="_blank" rel="noopener">${icon('wa')}WhatsApp</a>
+        <a class="cbtn ig" href="${attr(C.instagram)}" target="_blank" rel="noopener">${icon('ig')}Instagram</a>
       </div>
 
       <ul class="facts">

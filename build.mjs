@@ -275,10 +275,12 @@ const strip = (s) => `<section class="strip">
 // pairs: [{ label, before, after }] — если файлов нет, остаётся градиентная заглушка
 const realPairs = (pairs) => (pairs || []).filter((p) => isFile(p.before) && isFile(p.after));
 
-const beforeAfter = (pairs = [], root = '') => {
+const beforeAfter = (pairs = [], root = '', ratio = '') => {
   const ok = realPairs(pairs);
   const first = ok[0];
-  return `<div class="ba rv" id="ba">
+  // пропорция окна шторки: вертикальные портреты в горизонтальном кадре сильно обрезаются
+  const ar = ratio ? ` style="aspect-ratio:${ratio}"` : '';
+  return `<div class="ba rv" id="ba"${ar}>
       <div class="after" id="baAfter">${first ? `<img src="${root}images/${first.after}" alt="После процедуры" loading="lazy" decoding="async">` : ''}</div>
       <div class="before" id="baBefore">${first ? `<img src="${root}images/${first.before}" alt="До процедуры" loading="lazy" decoding="async">` : ''}</div>
       <div class="hd" id="baHandle"><span class="kn">↔</span></div>
@@ -420,7 +422,7 @@ ${list(
       <p class="sec-sub" style="margin-bottom:20px">${site.results.lead}</p>
       <div class="chips" id="baTabs">${baTabs(site.results.pairs, site.results.tags)}</div>
     </div>
-    ${beforeAfter(site.results.pairs)}
+    ${beforeAfter(site.results.pairs, '', site.results.ratio)}
   </div>
 </section>
 
@@ -776,7 +778,7 @@ ${list(p.indications, (i) => `      <li>${i}</li>`)}
         и фильтров. Фото публикуются с согласия клиентов. Потяните ползунок, чтобы сравнить.</p>
       <div class="chips" id="baTabs">${baTabs(p.beforeAfter, [p.beforeAfterNote], root)}</div>
     </div>
-    ${beforeAfter(p.beforeAfter, root)}
+    ${beforeAfter(p.beforeAfter, root, p.beforeAfterRatio || site.results.ratio)}
   </div>
 </section>
 

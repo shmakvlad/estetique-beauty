@@ -85,21 +85,22 @@
     "eyebrow": "Результаты",
     "title": "До и после",
     "lead": "Реальные клиенты, одинаковый свет и ракурс, без ретуши. Потяните ползунок, чтобы сравнить.",
+    "ratio": "3/4",
     "pairs": [
       {
         "label": "Акне",
-        "before": "",
-        "after": ""
+        "before": "a1.png",
+        "after": "a2.png"
       },
       {
         "label": "Пигментация",
-        "before": "",
-        "after": ""
+        "before": "p1.png",
+        "after": "p0.png"
       },
       {
         "label": "Овал лица",
-        "before": "",
-        "after": ""
+        "before": "do.png",
+        "after": "posle.png"
       }
     ],
     "tags": ["Акне", "Пигментация", "Овал лица"]

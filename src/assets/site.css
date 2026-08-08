@@ -829,3 +829,6 @@ button{font:inherit; cursor:pointer; border:0; background:none; color:inherit}
 button.chip{border:0; cursor:pointer; transition:background .3s var(--ease), color .3s}
 button.chip:hover{background:#E5DCCE}
 button.chip.on{background:var(--dark); color:var(--bg)}
+
+/* окно шторки не должно вырастать на весь экран при вертикальной пропорции */
+.ba{max-height:min(78vh, 680px); margin-inline:auto}

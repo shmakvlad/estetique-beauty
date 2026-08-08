@@ -10,10 +10,10 @@
       "capMega": "Лицо",
       "photo": "chi.jpg",
       "photoPos": "",
-      "photoDir": "",
+      "photoDir": "g14.webp",
       "photoDirPos": "",
       "order": 1,
-      "cardOrder": 3
+      "cardOrder": 2
     },
     {
       "id": "pilingi",
@@ -22,10 +22,10 @@
       "capMega": "Лицо",
       "photo": "pil.jpg",
       "photoPos": "",
-      "photoDir": "",
+      "photoDir": "g11.webp",
       "photoDirPos": "",
       "order": 2,
-      "cardOrder": 2
+      "cardOrder": 1
     },
     {
       "id": "massazh",
@@ -34,10 +34,10 @@
       "capMega": "Лицо и тело",
       "photo": "maslica.webp",
       "photoPos": "",
-      "photoDir": "",
+      "photoDir": "www.jpg",
       "photoDirPos": "",
-      "order": 3,
-      "cardOrder": 1
+      "order": 4,
+      "cardOrder": 4
     },
     {
       "id": "omolozhenie",
@@ -47,10 +47,10 @@
       "capMega": "Лицо",
       "photo": "omol.jpeg",
       "photoPos": "center 30%",
-      "photoDir": "",
+      "photoDir": "mariya.webp",
       "photoDirPos": "",
-      "order": 4,
-      "cardOrder": 4
+      "order": 3,
+      "cardOrder": 3
     }
   ],
   "procedures": [

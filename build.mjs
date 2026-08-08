@@ -37,6 +37,8 @@ const link = (p, root) => (p.page ? `${root}uslugi/${p.slug}/${IDX}` : hrefHome(
 const tel = `tel:${C.phoneHref}`;
 const ph = (v) => (v ? ` ${v}` : '');
 const list = (a, f) => a.map(f).join('\n');
+// Экранирование для значений атрибутов: & в адресе иначе читается как начало спецсимвола
+const attr = (v = '') => String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
 
 // Фото из src/images или градиентная заглушка, если файла ещё нет.
 // В data достаточно указать имя файла: "photo": "mariya.webp"
@@ -635,7 +637,12 @@ ${list(
 
     <div class="col rv book-map">
       <div class="map">
-        <div class="canvas">Яндекс.Карта<br>пр-т Победителей 141</div>
+        <div class="canvas${C.mapEmbed ? ' has-map' : ''}">${
+          C.mapEmbed
+            ? `<iframe src="${attr(C.mapEmbed)}" title="Карта проезда: ${C.address}"
+              loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>`
+            : `Яндекс.Карта<br>${C.address}`
+        }</div>
         <div class="info">
           <span class="lb">Адрес</span>
           <b>${C.address}</b>

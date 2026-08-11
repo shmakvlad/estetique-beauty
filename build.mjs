@@ -193,15 +193,19 @@ const modal = () => `<div class="ov" id="ov">
       <div><h3>Запись</h3><div class="svc" id="mSvc">Выберите услугу</div></div>
       <button class="modal-x" id="mX" aria-label="Закрыть">✕</button>
     </div>
-    <form id="mForm" novalidate>
+    <form id="mForm" name="zayavka-popap" method="POST"
+          data-netlify="true" netlify-honeypot="bot-field" novalidate>
+      <input type="hidden" name="form-name" value="zayavka-popap">
+      <input type="hidden" name="usluga" id="mSvcField" value="">
+      <p class="hp"><label>Не заполняйте: <input name="bot-field"></label></p>
       <div class="fld-row">
         <div class="fld"><label for="m-name">Ваше имя</label>
-          <input id="m-name" placeholder="Как к вам обращаться"></div>
+          <input id="m-name" name="imya" placeholder="Как к вам обращаться"></div>
         <div class="fld"><label for="m-tel">Телефон или мессенджер</label>
-          <input id="m-tel" type="tel" required placeholder="+375 __ ___-__-__"></div>
+          <input id="m-tel" name="telefon" type="tel" required placeholder="+375 __ ___-__-__"></div>
       </div>
       <div class="fld"><label for="m-when">Желаемое время</label>
-        <input id="m-when" placeholder="Например: будни после 18:00"></div>
+        <input id="m-when" name="vremya" placeholder="Например: будни после 18:00"></div>
       <button class="btn" type="submit" style="width:100%">${site.booking.cta}</button>
       <p class="consent">${site.booking.consent}</p>
       <div style="text-align:center; font-size:13px; color:var(--muted); margin:18px 0 10px">или сразу в мессенджер</div>
@@ -678,16 +682,19 @@ ${list(
 
     <div class="col rv">
       <div class="form-card">
-        <form id="bookForm" novalidate>
+        <form id="bookForm" name="zayavka-stranica" method="POST"
+              data-netlify="true" netlify-honeypot="bot-field" novalidate>
+          <input type="hidden" name="form-name" value="zayavka-stranica">
+          <p class="hp"><label>Не заполняйте: <input name="bot-field"></label></p>
           <div class="fld-row">
             <div class="fld"><label for="f-name">Ваше имя</label>
-              <input id="f-name" placeholder="Как к вам обращаться"></div>
+              <input id="f-name" name="imya" placeholder="Как к вам обращаться"></div>
             <div class="fld"><label for="f-tel">Телефон или мессенджер</label>
-              <input id="f-tel" type="tel" required placeholder="+375 __ ___-__-__"></div>
+              <input id="f-tel" name="telefon" type="tel" required placeholder="+375 __ ___-__-__"></div>
           </div>
           <div class="fld">
             <label for="f-svc">Услуга</label>
-            <select id="f-svc">
+            <select id="f-svc" name="usluga">
               <option value="">Выберите направление</option>
               ${site.booking.serviceOptions.map((o) => `<option>${o}</option>`).join('')}
             </select>

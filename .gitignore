@@ -5,3 +5,6 @@ node_modules/
 # результат сборки — восстанавливается командой npm run build
 dist/
 originals/
+
+# корзина неиспользуемых фото — в сборку и в репозиторий не нужна
+images-deprecated/

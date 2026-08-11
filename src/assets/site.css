@@ -882,3 +882,6 @@ button.chip.on{background:var(--dark); color:var(--bg)}
 .ava.has-img{background:none}
 .ava.has-img .ph-img{border-radius:50%}
 .edu-quote .ava i{font-size:15px}
+
+/* ловушка для спам-ботов: человек её не видит, робот заполняет и отсеивается */
+.hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden}

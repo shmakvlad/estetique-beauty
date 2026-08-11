@@ -199,6 +199,8 @@
   var openM = function (svc, src) {
     last = src || null;
     mSvc.textContent = svc || 'Услугу уточним при звонке';
+    var f = document.getElementById('mSvcField');
+    if (f) f.value = svc || 'не указана';
     ov.classList.add('on');
     document.body.style.overflow = 'hidden';
     setTimeout(function () {
@@ -233,8 +235,30 @@
         tel.style.borderColor = '#B4564A';
         return;
       }
-      form.style.display = 'none';
-      okEl.classList.add('on');
+      var btn = form.querySelector('button[type="submit"]');
+      var label = btn ? btn.textContent : '';
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Отправляю…';
+      }
+      // Заявка уходит в панель Netlify: там же настраиваются уведомления
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(form)).toString(),
+      })
+        .then(function (r) {
+          if (!r.ok) throw new Error(r.status);
+          form.style.display = 'none';
+          okEl.classList.add('on');
+        })
+        .catch(function () {
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = label;
+          }
+          alert('Не получилось отправить. Позвоните или напишите в мессенджер — ссылки рядом с формой.');
+        });
     });
   };
   submit(document.getElementById('mForm'), document.getElementById('mOk'));

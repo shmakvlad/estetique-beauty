@@ -453,7 +453,7 @@ ${list(
 <!-- ============ О МАСТЕРЕ ============ -->
 <section class="sec" id="about" style="background:var(--soft)">
   <div class="wrap about">
-    <div class="im ph rv">${pic(site.about.photo, { alt: site.about.photoAlt || site.about.name, w: 600, h: 750 })}</div>
+    <div class="im ph rv"${site.about.photoRatio ? ` style="aspect-ratio:${site.about.photoRatio}"` : ''}>${pic(site.about.photo, { alt: site.about.photoAlt || site.about.name, w: 600, h: 750, pos: site.about.photoPos })}</div>
     <div class="rv bio">
       <p class="eyebrow">${site.about.eyebrow}</p>
       <h2 class="sec-h">${site.about.name}</h2>

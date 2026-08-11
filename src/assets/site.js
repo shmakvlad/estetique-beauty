@@ -235,6 +235,9 @@
         tel.style.borderColor = '#B4564A';
         return;
       }
+      var prev = form.querySelector('.form-error');
+      if (prev) prev.remove();
+
       var btn = form.querySelector('button[type="submit"]');
       var label = btn ? btn.textContent : '';
       if (btn) {
@@ -260,9 +263,18 @@
             btn.disabled = false;
             btn.textContent = label;
           }
-          alert(
-            'Не получилось отправить заявку. Позвоните или напишите в мессенджер — ссылки рядом с формой.'
-          );
+          var msg = form.querySelector('.form-error');
+          if (!msg) {
+            msg = document.createElement('p');
+            msg.className = 'form-error';
+            btn.insertAdjacentElement('afterend', msg);
+          }
+          // Открытый с диска файл не может достучаться до серверной функции —
+          // при локальной проверке это ожидаемо, а не поломка
+          msg.textContent =
+            location.protocol === 'file:'
+              ? 'Локальный просмотр: отправка работает только на опубликованном сайте.'
+              : 'Не получилось отправить. Позвоните или напишите в мессенджер — кнопки ниже.';
         });
     });
   };

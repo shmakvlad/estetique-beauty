@@ -8,6 +8,7 @@
     "build": "node build.mjs --local",
     "build:prod": "node build.mjs",
     "images": "arch -arm64 python3 tools/convert-images.py",
-    "where": "node tools/where.mjs"
+    "where": "node tools/where.mjs",
+    "dev": "netlify dev"
   }
 }

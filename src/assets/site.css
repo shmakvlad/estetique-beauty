@@ -885,3 +885,8 @@ button.chip.on{background:var(--dark); color:var(--bg)}
 
 /* ловушка для спам-ботов: человек её не видит, робот заполняет и отсеивается */
 .hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden}
+
+/* сообщение об ошибке отправки — вместо системного окна браузера */
+.form-error{margin:12px 0 0; padding:11px 14px; border-radius:var(--r-sm);
+  background:#FBF1EF; border:1px solid #F0D9D3; color:#8C3F33;
+  font-size:13px; line-height:1.5; text-align:center}

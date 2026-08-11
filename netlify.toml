@@ -5,6 +5,9 @@
   command = "npm run build:prod"   # чистые адреса вида /uslugi/chistka/
   publish = "dist"
 
+[functions]
+  directory = "netlify/functions"
+
 [build.environment]
   NODE_VERSION = "20"
 

@@ -241,11 +241,14 @@
         btn.disabled = true;
         btn.textContent = 'Отправляю…';
       }
-      // Заявка уходит в панель Netlify: там же настраиваются уведомления
-      fetch('/', {
+      // Заявка уходит на серверный обработчик, тот пересылает её в Telegram
+      var data = new FormData(form);
+      data.append('istochnik', location.pathname + location.hash);
+
+      fetch(form.dataset.endpoint || '/api/notify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(new FormData(form)).toString(),
+        body: new URLSearchParams(data).toString(),
       })
         .then(function (r) {
           if (!r.ok) throw new Error(r.status);
@@ -257,7 +260,9 @@
             btn.disabled = false;
             btn.textContent = label;
           }
-          alert('Не получилось отправить. Позвоните или напишите в мессенджер — ссылки рядом с формой.');
+          alert(
+            'Не получилось отправить заявку. Позвоните или напишите в мессенджер — ссылки рядом с формой.'
+          );
         });
     });
   };

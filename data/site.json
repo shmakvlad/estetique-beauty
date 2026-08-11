@@ -13,7 +13,7 @@
     "address": "пр-т Победителей 141, каб. 248",
     "addressNote": "2-й этаж, вход со стороны парковки. Бесплатная гостевая парковка перед зданием.",
     "city": "Минск",
-    "telegram": "https://t.me/Maria_Torapava",
+    "telegram": "https://t.me/shmakvlad",
     "viber": "viber://chat?number=%2B375296113541",
     "whatsapp": "https://api.whatsapp.com/send/?phone=375296113541&text&type=phone_number&app_absent=0",
     "instagram": "https://www.instagram.com/esthetic_beauty.by",
@@ -30,6 +30,10 @@
       }
     ],
     "hoursShort": "Пн–Сб 10:00–20:00"
+  },
+  "forms": {
+    "_note": "Адрес обработчика заявок. При переезде на другой хостинг меняется только он.",
+    "endpoint": "/api/notify"
   },
   "hero": {
     "badge": "Косметический кабинет в Минске",

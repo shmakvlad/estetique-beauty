@@ -193,9 +193,7 @@ const modal = () => `<div class="ov" id="ov">
       <div><h3>Запись</h3><div class="svc" id="mSvc">Выберите услугу</div></div>
       <button class="modal-x" id="mX" aria-label="Закрыть">✕</button>
     </div>
-    <form id="mForm" name="zayavka-popap" method="POST"
-          data-netlify="true" netlify-honeypot="bot-field" novalidate>
-      <input type="hidden" name="form-name" value="zayavka-popap">
+    <form id="mForm" data-endpoint="${site.forms.endpoint}" novalidate>
       <input type="hidden" name="usluga" id="mSvcField" value="">
       <p class="hp"><label>Не заполняйте: <input name="bot-field"></label></p>
       <div class="fld-row">
@@ -682,9 +680,7 @@ ${list(
 
     <div class="col rv">
       <div class="form-card">
-        <form id="bookForm" name="zayavka-stranica" method="POST"
-              data-netlify="true" netlify-honeypot="bot-field" novalidate>
-          <input type="hidden" name="form-name" value="zayavka-stranica">
+        <form id="bookForm" data-endpoint="${site.forms.endpoint}" novalidate>
           <p class="hp"><label>Не заполняйте: <input name="bot-field"></label></p>
           <div class="fld-row">
             <div class="fld"><label for="f-name">Ваше имя</label>

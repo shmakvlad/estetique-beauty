@@ -230,11 +230,13 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var tel = form.querySelector('input[required]');
-      if (!tel.value.trim()) {
+      var ok = window.__phoneFilled ? window.__phoneFilled(tel) : !!tel.value.trim();
+      if (!ok) {
         tel.focus();
         tel.style.borderColor = '#B4564A';
         return;
       }
+      tel.style.borderColor = '';
       var prev = form.querySelector('.form-error');
       if (prev) prev.remove();
 
@@ -387,4 +389,78 @@
     new Image().src = b.dataset.before;
     new Image().src = b.dataset.after;
   });
+})();
+
+/* ---------- МАСКА ТЕЛЕФОНА ---------- */
+(function () {
+  var PREFIX = '+375 ';
+  var LEN = 9; // код оператора (2) + номер (7)
+
+  // Оставляем только цифры и отбрасываем код страны в любом написании:
+  // +375…, 375…, 80… — люди вводят по-разному
+  function digitsOf(value) {
+    var d = value.replace(/\D/g, '');
+    if (d.indexOf('375') === 0) d = d.slice(3);
+    else if (d.indexOf('80') === 0) d = d.slice(2);
+    return d.slice(0, LEN);
+  }
+
+  function format(d) {
+    var out = PREFIX;
+    if (d.length) out += d.slice(0, 2);
+    if (d.length > 2) out += ' ' + d.slice(2, 5);
+    if (d.length > 5) out += '-' + d.slice(5, 7);
+    if (d.length > 7) out += '-' + d.slice(7, 9);
+    return out;
+  }
+
+  function toEnd(el) {
+    var n = el.value.length;
+    try {
+      el.setSelectionRange(n, n);
+    } catch (e) {
+      /* поле может не поддерживать выделение */
+    }
+  }
+
+  document.querySelectorAll('input[type="tel"]').forEach(function (el) {
+    el.setAttribute('inputmode', 'tel');
+    el.setAttribute('autocomplete', 'tel');
+    el.setAttribute('maxlength', '17');
+
+    el.addEventListener('focus', function () {
+      if (!el.value) el.value = PREFIX;
+      setTimeout(function () {
+        toEnd(el);
+      }, 0);
+    });
+
+    el.addEventListener('input', function () {
+      el.value = format(digitsOf(el.value));
+      toEnd(el);
+    });
+
+    // Не даём стереть префикс: курсор всегда возвращается за него
+    el.addEventListener('keydown', function (e) {
+      if ((e.key === 'Backspace' || e.key === 'Delete') && el.selectionStart <= PREFIX.length) {
+        e.preventDefault();
+        toEnd(el);
+      }
+    });
+
+    // Если ничего не ввели — очищаем, чтобы показалась подсказка
+    // и сработала проверка обязательного поля
+    el.addEventListener('blur', function () {
+      if (!digitsOf(el.value)) el.value = '';
+    });
+
+    el.addEventListener('click', function () {
+      if (el.selectionStart < PREFIX.length) toEnd(el);
+    });
+  });
+
+  // Проверка на полноту номера — используется при отправке формы
+  window.__phoneFilled = function (el) {
+    return digitsOf(el.value).length === LEN;
+  };
 })();

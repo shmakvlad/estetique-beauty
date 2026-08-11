@@ -90,8 +90,8 @@
     "pairs": [
       {
         "label": "Акне",
-        "before": "a1.png",
-        "after": "a2.png"
+        "before": "01_do.jpg",
+        "after": "02_posle.jpg"
       },
       {
         "label": "Пигментация",
@@ -100,8 +100,8 @@
       },
       {
         "label": "Овал лица",
-        "before": "do.png",
-        "after": "posle.png"
+        "before": "",
+        "after": ""
       }
     ],
     "tags": ["Акне", "Пигментация", "Овал лица"]

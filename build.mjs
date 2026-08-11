@@ -115,7 +115,17 @@ ${list(
       </div>`
 )}
       <div class="mega-feat">
-        <div class="ph d"><div class="ph-grad"></div><span class="cap-abs">${site.megaFeature.caption}</span></div>
+        <div class="ph${isFile(site.megaFeature.photo) ? '' : ' d'}">${
+          isFile(site.megaFeature.photo)
+            ? pic(site.megaFeature.photo, {
+                root,
+                alt: site.megaFeature.caption,
+                w: 700,
+                h: 320,
+                pos: site.megaFeature.photoPos,
+              })
+            : ''
+        }<div class="ph-grad"></div><span class="cap-abs">${site.megaFeature.caption}</span></div>
         <div class="bd">
           <p>${site.megaFeature.text}</p>
           <button class="btn" data-book data-svc="${site.megaFeature.service}">${site.megaFeature.cta}</button>
@@ -964,6 +974,7 @@ const slots = [
   ['О мастере', site.about.photo],
   ['Обучение', site.education.photo],
   ['Сертификат', site.gift.photo],
+  ['Карточка в меню «Услуги»', site.megaFeature.photo],
   ...site.reviews.items.map((r) => [`Отзыв: ${r.name}`, r.avatar]),
   ...cats.map((c) => [`Направление: ${c.title} — карточка`, c.photo]),
   ...cats.map((c) => [`Направление: ${c.title} — таблица`, c.photoDir || c.photo]),

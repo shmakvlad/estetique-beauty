@@ -13,6 +13,24 @@
     { passive: true }
   );
 
+  // Встроенные браузеры iOS (Telegram, Instagram) прячут нижнюю панель при
+  // скролле: видимая область растёт, а layout viewport остаётся прежним,
+  // и bottom:0 оказывается выше настоящего низа экрана. Держим по visualViewport.
+  var vv = window.visualViewport;
+  if (vv && sticky) {
+    var vvRaf;
+    var syncBottom = function () {
+      cancelAnimationFrame(vvRaf);
+      vvRaf = requestAnimationFrame(function () {
+        var gap = vv.scale > 1.01 ? 0 : innerHeight - vv.offsetTop - vv.height;
+        sticky.style.setProperty('--vvb', Math.round(gap) + 'px');
+      });
+    };
+    vv.addEventListener('resize', syncBottom);
+    vv.addEventListener('scroll', syncBottom);
+    syncBottom();
+  }
+
   var li = document.getElementById('navSvc'),
     mega = document.getElementById('mega');
   if (li && mega) {
@@ -203,9 +221,15 @@
     if (f) f.value = svc || 'не указана';
     ov.classList.add('on');
     document.body.style.overflow = 'hidden';
-    setTimeout(function () {
-      document.getElementById('m-tel').focus();
-    }, 320);
+    // Автофокус только там, где есть мышь. На телефоне он сразу поднимает
+    // клавиатуру: она закрывает половину окна, а при её закрытии iOS сдвигает
+    // фиксированные элементы — нижняя панель уезжает с места.
+    if (matchMedia('(pointer:fine)').matches) {
+      setTimeout(function () {
+        var t = document.getElementById('m-tel');
+        if (t) t.focus();
+      }, 320);
+    }
   };
   var closeM = function () {
     ov.classList.remove('on');
@@ -227,6 +251,8 @@
   });
 
   var submit = function (form, okEl) {
+    // Формы записи нет на страницах процедур — там только модальное окно
+    if (!form || !okEl) return;
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var tel = form.querySelector('input[required]');

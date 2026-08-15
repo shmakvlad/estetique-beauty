@@ -401,7 +401,7 @@ button{font:inherit; cursor:pointer; border:0; background:none; color:inherit}
 
 /* ---------- КОНТАКТНАЯ ПОЛОСА ---------- */
 .strip{background:var(--dark); color:#F1EBE3}
-.strip-in{display:grid; gap:18px; padding:24px 0; align-items:center}
+.strip-in{display:grid; gap:18px; padding-block:24px; align-items:center}
 .strip-i{display:flex; gap:13px; align-items:center}
 .strip-i .ic{width:42px; height:42px; border:1px solid #463E37; border-radius:50%; display:flex;
   align-items:center; justify-content:center; flex:none}
@@ -415,7 +415,7 @@ button{font:inherit; cursor:pointer; border:0; background:none; color:inherit}
 
 /* ---------- ОБУЧЕНИЕ (компактно) ---------- */
 .edu{background:var(--dark); color:#F1EBE3}
-.edu-in{display:grid; gap:24px; padding:46px 0}
+.edu-in{display:grid; gap:24px; padding-block:46px}
 .edu .im{aspect-ratio:16/11; border-radius:var(--r-md); overflow:hidden; position:relative}
 .edu-side{display:grid; gap:12px; margin-top:12px}
 .edu-flow{border:1px solid #463E37; border-radius:var(--r-md); padding:14px 16px}
@@ -447,7 +447,7 @@ button{font:inherit; cursor:pointer; border:0; background:none; color:inherit}
 
 /* ---------- СЕРТИФИКАТ ---------- */
 .gift{background:var(--soft)}
-.gift-in{display:grid; gap:28px; padding:54px 0; align-items:center}
+.gift-in{display:grid; gap:28px; padding-block:54px; align-items:center}
 .gift-card{aspect-ratio:1/1; border-radius:var(--r-lg); position:relative; overflow:hidden;
   background:linear-gradient(150deg,#E9DBC8,#C9B096 55%,#A0866B);
   display:flex; align-items:center; justify-content:center; transition:transform .6s var(--ease)}
@@ -558,7 +558,7 @@ button{font:inherit; cursor:pointer; border:0; background:none; color:inherit}
   font-size:12.5px; color:var(--muted); line-height:1.65}
 
 /* ---------- STICKY BOTTOM ---------- */
-.sticky{position:fixed; left:0; right:0; bottom:0; z-index:50; display:flex; gap:9px;
+.sticky{position:fixed; left:0; right:0; bottom:var(--vvb,0px); z-index:50; display:flex; gap:9px;
   padding:10px var(--pad) calc(10px + env(safe-area-inset-bottom));
   background:rgba(245,241,236,.96); backdrop-filter:blur(10px); border-top:1px solid var(--line);
   transform:translateY(115%); transition:transform .4s var(--ease)}
@@ -608,8 +608,8 @@ button{font:inherit; cursor:pointer; border:0; background:none; color:inherit}
   .sig-grid,.rev-grid,.why-grid{grid-template-columns:repeat(3,1fr)}
   .ba-wrap{grid-template-columns:1fr 1fr; gap:44px}
   .about{grid-template-columns:300px minmax(0,1fr); gap:42px}
-  .edu-in{grid-template-columns:280px 1fr; gap:36px; padding:58px 0}
-  .gift-in{grid-template-columns:330px 1fr; gap:46px; padding:68px 0}
+  .edu-in{grid-template-columns:280px 1fr; gap:36px; padding-block:58px}
+  .gift-in{grid-template-columns:330px 1fr; gap:46px; padding-block:68px}
   .book-in{grid-template-columns:1fr 1fr; gap:22px}
   .book-map{grid-column:1/-1}
   .map{flex-direction:row}
@@ -645,12 +645,12 @@ button{font:inherit; cursor:pointer; border:0; background:none; color:inherit}
 }
 
 /* ================= СТРАНИЦА ПРОЦЕДУРЫ ================= */
-.crumbs{font-size:13px; color:var(--muted); padding:22px 0 0; display:flex; flex-wrap:wrap; gap:8px}
+.crumbs{font-size:13px; color:var(--muted); padding-block:22px 0; display:flex; flex-wrap:wrap; gap:8px}
 .crumbs a{transition:color .25s}
 .crumbs a:hover{color:var(--hl)}
 .crumbs span{opacity:.5}
 
-.proc-hero{display:grid; gap:26px; padding:22px 0 0; align-items:start}
+.proc-hero{display:grid; gap:26px; padding-block:22px 0; align-items:start}
 .proc-h1{font-size:clamp(27px,4.4vw,40px); margin:12px 0 12px}
 .proc-lead{color:var(--ink-2); font-size:16px; line-height:1.65; margin:0}
 .proc-gal{display:grid; gap:10px; margin-top:24px}

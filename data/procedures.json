@@ -34,7 +34,7 @@
       "capMega": "Лицо и тело",
       "photo": "maslica.webp",
       "photoPos": "",
-      "photoDir": "mas.jpg",
+      "photoDir": "EtfpE.jpg",
       "photoDirPos": "",
       "order": 4,
       "cardOrder": 4
@@ -47,7 +47,7 @@
       "capMega": "Лицо",
       "photo": "omol.webp",
       "photoPos": "center 30%",
-      "photoDir": "omolo.jpg",
+      "photoDir": "g5.jpg",
       "photoDirPos": "left",
       "order": 3,
       "cardOrder": 3
@@ -295,8 +295,8 @@
         "Без сауны и горячей бани в первые сутки"
       ],
       "careNote": "Памятку с домашним уходом пришлю в мессенджер после сеанса.",
-      "photoCover": "maska.webp",
-      "gallery": ["ochishchenie.webp", "sostav.webp", "massazh-lica.webp"]
+      "photoCover": "ochishchenie.webp",
+      "gallery": ["sostav.webp", "massazh-lica.webp", "maska.webp"]
     },
     {
       "slug": "kombinirovannaya-chistka",
@@ -363,7 +363,7 @@
         {
           "title": "Ручная проработка",
           "text": "Точечно, только там, где нужно: Т-зона, подбородок. Работаю дозированно, слежу за реакцией кожи.",
-          "photo": "ekstrakciya.webp"
+          "photo": "kombinirovannaya-chistka.webp"
         },
         {
           "title": "Успокоение и сужение пор",
@@ -416,8 +416,8 @@
         "Мягкое очищение без скрабов первую неделю"
       ],
       "careNote": "Лёгкое покраснение в первые часы — нормальная реакция, проходит к вечеру.",
-      "photoCover": "ultrazvuk.webp",
-      "gallery": ["ochishchenie.webp", "ekstrakciya.webp", "finish.webp"]
+      "photoCover": "kombinirovannaya-chistka.webp",
+      "gallery": ["ochishchenie.webp", "ultrazvuk.webp", "finish.webp"]
     },
     {
       "slug": "ultrazvukovaya-chistka",
@@ -600,7 +600,7 @@
         {
           "title": "Кислотный состав",
           "text": "Наношу подобранный по типу кожи состав. Он разрыхляет сальные пробки изнутри поры.",
-          "photo": "sostav.webp"
+          "photo": "atravmatichnaya-chistka.webp"
         },
         {
           "title": "Работа с порами и нейтрализация",
@@ -658,8 +658,8 @@
         "Усиленное увлажнение: кожа может слегка шелушиться на 2–3 день"
       ],
       "careNote": "Шелушение на второй–третий день — ожидаемая реакция, а не осложнение. Не сдирайте, просто увлажняйте.",
-      "photoCover": "ekstrakciya.webp",
-      "gallery": ["ochishchenie.webp", "sostav.webp", "finish.webp"]
+      "photoCover": "atravmatichnaya-chistka.webp",
+      "gallery": ["ochishchenie.webp", "ekstrakciya.webp", "finish.webp"]
     },
     {
       "slug": "piling-prx-t33",
@@ -724,7 +724,7 @@
         {
           "title": "Нанесение с массажем",
           "text": "Состав втирается послойно — именно массаж обеспечивает проникновение в дерму.",
-          "photo": "sostav.webp"
+          "photo": "piling-prx-t33.webp"
         },
         {
           "title": "Выдержка и нейтрализация",
@@ -782,8 +782,8 @@
         "Не использовать кислоты дома между процедурами"
       ],
       "careNote": "Между процедурами курса домашний уход обязателен — он и удерживает результат.",
-      "photoCover": "maska.webp",
-      "gallery": ["ochishchenie.webp", "sostav.webp", "finish.webp"]
+      "photoCover": "piling-prx-t33.webp",
+      "gallery": ["ochishchenie.webp", "maska.webp", "finish.webp"]
     },
     {
       "slug": "biorepeel",
@@ -851,7 +851,7 @@
         {
           "title": "Нанесение состава",
           "text": "Двухфазная формула наносится с проработкой проблемных зон. Возможно лёгкое покалывание.",
-          "photo": "sostav.webp"
+          "photo": "biorepeel.webp"
         },
         {
           "title": "Нейтрализация и уход",
@@ -904,8 +904,8 @@
         "Усиленное увлажнение весь курс"
       ],
       "careNote": "Полную памятку пришлю в мессенджер после записи.",
-      "photoCover": "osmotr.webp",
-      "gallery": ["ochishchenie.webp", "sostav.webp", "finish.webp"]
+      "photoCover": "biorepeel.webp",
+      "gallery": ["osmotr.webp", "ochishchenie.webp", "finish.webp"]
     },
     {
       "slug": "mindalnyy-piling",
@@ -1026,8 +1026,8 @@
         "Мягкое очищение и увлажнение"
       ],
       "careNote": "Лёгкое шелушение на второй день возможно и является нормой.",
-      "photoCover": "osmotr.webp",
-      "gallery": ["ochishchenie.webp", "sostav.webp", "finish.webp"]
+      "photoCover": "sostav.webp",
+      "gallery": ["ochishchenie.webp", "osmotr.webp", "finish.webp"]
     },
     {
       "slug": "molochnyy-piling",
@@ -1094,7 +1094,7 @@
         {
           "title": "Нанесение кислоты",
           "text": "Время выдержки от 10 до 40 минут, подбирается по реакции кожи.",
-          "photo": "sostav.webp"
+          "photo": "molochnyy-piling.webp"
         },
         {
           "title": "Смывание и маска",
@@ -1147,8 +1147,8 @@
         "Не сдирать шелушение — оно сойдёт само"
       ],
       "careNote": "Лёгкое шелушение и порозовение первые 2–3 дня — ожидаемая реакция, а не осложнение.",
-      "photoCover": "maska.webp",
-      "gallery": ["ochishchenie.webp", "osmotr.webp", "sostav.webp"]
+      "photoCover": "molochnyy-piling.webp",
+      "gallery": ["ochishchenie.webp", "osmotr.webp", "maska.webp"]
     },
     {
       "slug": "sredinnyy-piling",
@@ -1356,7 +1356,7 @@
         {
           "title": "Сеанс массажа",
           "text": "Мягкие ритмичные приёмы по ходу лимфотока плюс проработка застойных зон.",
-          "photo": "massazh-lica.webp"
+          "photo": "metabolicheskiy-massazh.webp"
         },
         {
           "title": "Питательное завершение",
@@ -1405,7 +1405,7 @@
         "Спать на высокой подушке, если отёк по утрам"
       ],
       "careNote": "Эффект держится 2–3 дня после разового сеанса и закрепляется курсом.",
-      "photoCover": "massazh-lica.webp",
+      "photoCover": "metabolicheskiy-massazh.webp",
       "gallery": ["osmotr.webp", "ochishchenie.webp", "finish.webp"]
     },
     {
@@ -1475,7 +1475,7 @@
         {
           "title": "Проработка мышц",
           "text": "Глубокие приёмы по мышечным группам, включая шею. Ощущения интенсивные, но терпимые.",
-          "photo": "massazh-lica.webp"
+          "photo": "miolifting-massazh.webp"
         },
         {
           "title": "Фиксация результата",
@@ -1525,7 +1525,7 @@
         "Не делать инъекции 3–5 дней после"
       ],
       "careNote": "Разовый сеанс даёт эффект на пару дней. Овал меняется только курсом — это работа с мышцей, а не косметический эффект.",
-      "photoCover": "massazh-lica.webp",
+      "photoCover": "miolifting-massazh.webp",
       "gallery": ["osmotr.webp", "ochishchenie.webp", "finish.webp"]
     },
     {
@@ -1718,7 +1718,7 @@
         {
           "title": "Глубокая проработка",
           "text": "Разминание, точечная работа с зажимами. Интенсивность подстраиваю под ваш порог.",
-          "photo": "massazh-tela.webp"
+          "photo": "massazh-shvz.webp"
         },
         {
           "title": "Растяжка и завершение",
@@ -1772,8 +1772,8 @@
         "Делать перерывы в работе за монитором"
       ],
       "careNote": "Разовый сеанс снимает симптом. Причина уходит только курсом плюс изменением привычек за столом.",
-      "photoCover": "massazh-tela.webp",
-      "gallery": ["osmotr.webp", "finish.webp", "ochishchenie.webp"]
+      "photoCover": "massazh-shvz.webp",
+      "gallery": ["osmotr.webp", "massazh-tela.webp", "finish.webp"]
     },
     {
       "slug": "massazh-spiny-i-tela",
@@ -1842,7 +1842,7 @@
         {
           "title": "Глубокая проработка",
           "text": "Разминание, точечная работа с триггерами, растяжение укороченных мышц.",
-          "photo": "massazh-tela.webp"
+          "photo": "massazh-shvz.webp"
         },
         {
           "title": "Завершение",
@@ -1897,7 +1897,7 @@
       ],
       "careNote": "После первого сеанса возможна крепатура, как после тренировки. Со второго-третьего она уходит.",
       "photoCover": "massazh-tela.webp",
-      "gallery": ["osmotr.webp", "finish.webp", "ochishchenie.webp"]
+      "gallery": ["osmotr.webp", "massazh-shvz.webp", "finish.webp"]
     },
     {
       "slug": "limfodrenazhnyy-massazh",
@@ -1964,7 +1964,7 @@
         {
           "title": "Дренаж по зонам",
           "text": "Мягкие ритмичные движения строго по направлению лимфотока — от периферии к центру.",
-          "photo": "massazh-tela.webp"
+          "photo": "limfodrenazhnyy-massazh.webp"
         },
         {
           "title": "Завершение",
@@ -2019,8 +2019,8 @@
         "Компрессионное бельё при варикозе, если назначено врачом"
       ],
       "careNote": "Питьевой режим здесь не рекомендация, а часть процедуры: лимфодренаж без воды работает вполсилы.",
-      "photoCover": "massazh-tela.webp",
-      "gallery": ["osmotr.webp", "finish.webp", "ochishchenie.webp"]
+      "photoCover": "limfodrenazhnyy-massazh.webp",
+      "gallery": ["osmotr.webp", "massazh-tela.webp", "finish.webp"]
     },
     {
       "slug": "ultraceuticals-intensiv",
@@ -2267,8 +2267,8 @@
         "Для устойчивого результата — курс, а не разовый визит"
       ],
       "careNote": "Разовая процедура даёт свежесть на несколько дней. Плотность и тонус меняются только курсом.",
-      "photoCover": "maska.webp",
-      "gallery": ["ochishchenie.webp", "massazh-lica.webp", "finish.webp"]
+      "photoCover": "finish.webp",
+      "gallery": ["ochishchenie.webp", "maska.webp", "massazh-lica.webp"]
     },
     {
       "slug": "diego-dalla-palma-lifting",
@@ -2336,7 +2336,7 @@
         {
           "title": "Лифтинг-средства",
           "text": "Наношу концентраты с укрепляющими компонентами по массажным линиям.",
-          "photo": "sostav.webp"
+          "photo": "diego-dalla-palma-lifting.webp"
         },
         {
           "title": "Массаж",
@@ -2394,8 +2394,8 @@
         "Курс закрепляет то, что разовая процедура даёт на несколько дней"
       ],
       "careNote": "Мгновенный эффект держится 3–5 дней. Устойчивое изменение плотности кожи — результат курса.",
-      "photoCover": "maska.webp",
-      "gallery": ["ochishchenie.webp", "sostav.webp", "massazh-lica.webp"]
+      "photoCover": "diego-dalla-palma-lifting.webp",
+      "gallery": ["ochishchenie.webp", "massazh-lica.webp", "maska.webp"]
     },
     {
       "slug": "neinvazivnaya-biorevitalizaciya",
@@ -2710,7 +2710,7 @@
         {
           "title": "Проход манипулой",
           "text": "Работа по зонам с разной глубиной: у рубцов глубже, на тонких участках мягче.",
-          "photo": "dermapen.webp"
+          "photo": "mikronidling.webp"
         },
         {
           "title": "Восстанавливающий финиш",
@@ -2766,7 +2766,7 @@
         "Не сдирать шелушение и корочки"
       ],
       "careNote": "Покраснение как после солнца в первые сутки и шелушение на 3–5 день — ожидаемая реакция, а не осложнение.",
-      "photoCover": "dermapen.webp",
+      "photoCover": "mikronidling.webp",
       "gallery": ["osmotr.webp", "ochishchenie.webp", "finish.webp"]
     }
   ],

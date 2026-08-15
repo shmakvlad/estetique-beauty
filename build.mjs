@@ -54,6 +54,21 @@ function pic(photo, { root = '', alt = '', cls = '', w, h, eager = false, pos = 
   return `<div class="ph${ph(photo)}"></div>`;
 }
 
+// Короткий текст для карточки процедуры: приоритет — собственное описание,
+// иначе берём начало вступления, обрезая по границе предложения
+const cardText = (p, fallback = '') => {
+  if (p.signatureText) return p.signatureText;
+  const src = (p.lead || '').trim();
+  if (!src) return fallback;
+  const parts = src.match(/[^.!?]+[.!?]+/g) || [src];
+  let out = '';
+  for (const part of parts) {
+    if (out && (out + part).length > 150) break;
+    out += part;
+  }
+  return out.trim() || fallback;
+};
+
 // Аватар: фото, если указан файл, иначе первая буква имени на градиенте —
 // брать чужие фото из профилей без разрешения нельзя, инициал выглядит осознанно.
 const avatar = (src, name, root = '') =>
@@ -412,10 +427,10 @@ ${strip(site.strips[0])}
 ${list(
   signature,
   (p) => `      <a class="sig rv" href="${link(p, '')}">
-        <div class="im">${pic(p.photo, { alt: p.title, w: 1200, h: 515 })}<span class="tagm">${site.signature.badge}</span></div>
+        <div class="im">${pic(p.photoCover || p.photo, { alt: p.title, w: 1200, h: 515 })}<span class="tagm">${site.signature.badge}</span></div>
         <div class="bd">
           <h3>${p.title}</h3>
-          <p>${p.signatureText}</p>
+          <p>${cardText(p)}</p>
           <div class="ft"><span class="pr">${money(p)} · ${p.duration} мин</span>
             <span class="arrow">${icon('ar')}</span></div>
         </div>
@@ -914,9 +929,9 @@ ${list(
   related,
   (
     r
-  ) => `      <a class="sig rv" href="${link(r, root)}"><div class="im">${pic(r.photo, { root, alt: r.title, w: 1200, h: 515 })}</div>
+  ) => `      <a class="sig rv" href="${link(r, root)}"><div class="im">${pic(r.photoCover || r.photo, { root, alt: r.title, w: 1200, h: 515 })}</div>
         <div class="bd"><h3>${r.title}</h3>
-          <p>${r.signatureText || `Процедура направления «${c.title}». Подробности и показания уточню на консультации.`}</p>
+          <p>${cardText(r, `Процедура направления «${c.title}». Подробности уточню на консультации.`)}</p>
           <div class="ft"><span class="pr">${money(r)} · ${r.duration} мин</span>
             <span class="arrow">${icon('ar')}</span></div></div></a>`
 )}

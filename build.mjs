@@ -35,6 +35,9 @@ const minPrice = (id) => Math.min(...procsOf(id).map((p) => p.price));
 const hrefHome = (root, hash = '') => (root ? `${root}${IDX}${hash}` : hash || '#');
 const link = (p, root) => (p.page ? `${root}uslugi/${p.slug}/${IDX}` : hrefHome(root, '#dir'));
 const dur = (p) => p.durationText || `${p.duration} мин`;
+const SEO = site.seo || {};
+const BASE = (SEO.siteUrl || '').replace(/\/$/, '');
+const abs = (path = '') => (BASE ? BASE + '/' + String(path).replace(/^\//, '') : '');
 const tel = `tel:${C.phoneHref}`;
 const ph = (v) => (v ? ` ${v}` : '');
 const list = (a, f) => a.map(f).join('\n');
@@ -254,14 +257,102 @@ const lightbox =
   <div class="lb-count" id="lbCount"></div>
 </div>`;
 
-const layout = ({ title, description, root, body, canonical }) => `<!DOCTYPE html>
+// Микроразметка: поисковики понимают, что это местный бизнес, где он и что предлагает
+const ldLocalBusiness = () =>
+  JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BeautySalon',
+    name: `${site.brand.name} ${site.brand.suffix}`,
+    url: BASE || undefined,
+    telephone: C.phone,
+    image: abs('images/' + (SEO.ogImage || '')) || undefined,
+    priceRange: SEO.priceRange,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: C.address,
+      addressLocality: C.city,
+      addressCountry: 'BY',
+    },
+    geo:
+      SEO.geo && SEO.geo.lat
+        ? { '@type': 'GeoCoordinates', latitude: SEO.geo.lat, longitude: SEO.geo.lon }
+        : undefined,
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        opens: '10:00',
+        closes: '20:00',
+      },
+    ],
+    sameAs: [C.telegram, C.instagram, site.reviews.platforms[0].url, site.reviews.platforms[1].url].filter(
+      Boolean
+    ),
+  });
+
+const ldProcedure = (p, c) =>
+  JSON.stringify([
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: p.titleFull || p.title,
+      serviceType: c.title,
+      description: (p.lead || '').slice(0, 300),
+      url: abs('uslugi/' + p.slug + '/') || undefined,
+      image: abs('images/' + p.photoCover) || undefined,
+      provider: {
+        '@type': 'BeautySalon',
+        name: `${site.brand.name} ${site.brand.suffix}`,
+        url: BASE || undefined,
+      },
+      areaServed: { '@type': 'City', name: C.city },
+      offers: {
+        '@type': 'Offer',
+        price: p.price,
+        priceCurrency: 'BYN',
+        availability: 'https://schema.org/InStock',
+      },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Главная', item: BASE || undefined },
+        { '@type': 'ListItem', position: 2, name: 'Услуги', item: abs('#services') || undefined },
+        { '@type': 'ListItem', position: 3, name: c.title },
+        { '@type': 'ListItem', position: 4, name: p.title },
+      ],
+    },
+  ]);
+
+const metrika = () =>
+  SEO.metrikaId
+    ? `<script>
+(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+ym(${SEO.metrikaId},"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/${SEO.metrikaId}" style="position:absolute;left:-9999px" alt=""></div></noscript>`
+    : '';
+
+const layout = ({ title, description, root, body, canonical, ld = '', ogImage = '' }) => `<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${title}</title>
 <meta name="description" content="${description}">
-${canonical ? `<link rel="canonical" href="${canonical}">\n` : ''}<link rel="preconnect" href="https://fonts.googleapis.com">
+${canonical && BASE ? `<link rel="canonical" href="${canonical}">\n` : ''}<meta property="og:type" content="website">
+<meta property="og:site_name" content="${site.brand.name} ${site.brand.suffix}">
+<meta property="og:title" content="${attr(title)}">
+<meta property="og:description" content="${attr(description)}">
+<meta property="og:locale" content="ru_RU">
+${canonical && BASE ? `<meta property="og:url" content="${canonical}">\n` : ''}${abs('images/' + (ogImage || SEO.ogImage || '')) ? `<meta property="og:image" content="${abs('images/' + (ogImage || SEO.ogImage))}">\n` : ''}<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="${root}favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="${root}favicon.svg">
+${ld ? `<script type="application/ld+json">${ld}</script>\n` : ''}<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@400;500;600&display=swap&subset=cyrillic" rel="stylesheet">
 <link rel="stylesheet" href="${root}assets/site.css">
@@ -284,6 +375,7 @@ ${modal()}
 ${lightbox()}
 
 <script src="${root}assets/site.js"></script>
+${metrika()}
 </body>
 </html>
 `;
@@ -936,6 +1028,9 @@ ${list(
     description: p.meta?.description || p.lead.slice(0, 160),
     root,
     body,
+    canonical: abs(`uslugi/${p.slug}/`),
+    ld: ldProcedure(p, c),
+    ogImage: p.photoCover,
   });
 }
 
@@ -955,6 +1050,8 @@ writeFileSync(
     description: `${site.hero.lead} ${C.address}. Запись: ${C.phone}.`,
     root: '',
     body: indexBody,
+    canonical: BASE || '',
+    ld: ldLocalBusiness(),
   })
 );
 
@@ -963,6 +1060,38 @@ for (const p of pages) {
   mkdirSync(dir, { recursive: true });
   writeFileSync(join(dir, 'index.html'), procedurePage(p));
 }
+
+// ——— карта сайта, robots и значок вкладки ———
+const urls = [
+  { loc: abs(''), pri: '1.0' },
+  ...pages.map((p) => ({ loc: abs(`uslugi/${p.slug}/`), pri: '0.8' })),
+];
+if (BASE) {
+  const today = new Date().toISOString().slice(0, 10);
+  writeFileSync(
+    join(dist, 'sitemap.xml'),
+    `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map((u) => `  <url><loc>${u.loc}</loc><lastmod>${today}</lastmod><priority>${u.pri}</priority></url>`).join('\n')}
+</urlset>
+`
+  );
+  writeFileSync(join(dist, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${abs('sitemap.xml')}\n`);
+} else {
+  // Без боевого адреса карта сайта бессмысленна: в ней должны быть полные ссылки
+  writeFileSync(join(dist, 'robots.txt'), 'User-agent: *\nAllow: /\n');
+}
+
+// Значок вкладки: та же антиква, что в логотипе
+writeFileSync(
+  join(dist, 'favicon.svg'),
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#2C2622"/>
+  <text x="32" y="45" font-family="Playfair Display,Georgia,serif" font-size="38"
+        fill="#F5F1EC" text-anchor="middle">E</text>
+</svg>
+`
+);
 
 // ——— отчёт ———
 const todo = db.procedures.filter((p) => p.priceTodo);
@@ -994,4 +1123,11 @@ const baCount = realPairs(site.results.pairs).length;
 const empty = slots.filter(([, v]) => !isFile(v));
 console.log(`\nФото: ${slots.length - empty.length} из ${slots.length} на месте, ${empty.length} — заглушки`);
 console.log(`Пар «до/после» на главной: ${baCount || 'ни одной — показывается заглушка'}`);
+if (!BASE) {
+  console.log('\n⚠ Не задан seo.siteUrl в data/site.json — не создаются карта сайта,');
+  console.log('  canonical и превью для соцсетей. Заполните после подключения домена.');
+} else {
+  console.log(`\nКарта сайта: ${urls.length} адресов, robots.txt — готово`);
+}
+if (!SEO.metrikaId) console.log('⚠ Не задан seo.metrikaId — Яндекс.Метрика не подключена');
 if (LOCAL) console.log('\nЛокальная сборка: ссылки ведут на index.html, откроется с диска');

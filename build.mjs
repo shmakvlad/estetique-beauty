@@ -34,6 +34,7 @@ const minPrice = (id) => Math.min(...procsOf(id).map((p) => p.price));
 // путь до index.html, иначе браузер при открытии с диска показывает список папки.
 const hrefHome = (root, hash = '') => (root ? `${root}${IDX}${hash}` : hash || '#');
 const link = (p, root) => (p.page ? `${root}uslugi/${p.slug}/${IDX}` : hrefHome(root, '#dir'));
+const dur = (p) => p.durationText || `${p.duration} мин`;
 const tel = `tel:${C.phoneHref}`;
 const ph = (v) => (v ? ` ${v}` : '');
 const list = (a, f) => a.map(f).join('\n');
@@ -431,7 +432,7 @@ ${list(
         <div class="bd">
           <h3>${p.title}</h3>
           <p>${cardText(p)}</p>
-          <div class="ft"><span class="pr">${money(p)} · ${p.duration} мин</span>
+          <div class="ft"><span class="pr">${money(p)} · ${dur(p)}</span>
             <span class="arrow">${icon('ar')}</span></div>
         </div>
       </a>`
@@ -455,7 +456,7 @@ ${list(
   procsOf(c.id),
   (
     p
-  ) => `        <div class="row"><div><a class="nm" href="${link(p, '')}">${p.title}</a><div class="du">${p.duration} мин</div></div>
+  ) => `        <div class="row"><div><a class="nm" href="${link(p, '')}">${p.title}</a><div class="du">${dur(p)}${p.rowNote ? ` · ${p.rowNote}` : ''}</div></div>
           <div class="pr">${money(p)}</div><button class="bk" data-book data-svc="${p.title}">Записаться</button></div>`
 )}
       </div>
@@ -766,7 +767,7 @@ function procedurePage(p) {
   const related = procsOf(p.category)
     .filter((x) => x.slug !== p.slug)
     .slice(0, 3);
-  const svc = `${p.titleFull || p.title} · ${p.duration} мин · ${money(p)}`;
+  const svc = `${p.titleFull || p.title} · ${dur(p)} · ${money(p)}`;
 
   const body = `<!-- ============ ХЛЕБНЫЕ КРОШКИ ============ -->
 <div class="wrap crumbs">
@@ -899,7 +900,7 @@ ${list(p.aftercare, (i) => `          <li>${i}</li>`)}
     <div class="book-slim rv">
       <div>
         <h2>Записаться на ${p.title[0].toLowerCase() + p.title.slice(1)}</h2>
-        <p>Оставьте заявку или напишите в мессенджер — согласуем удобное время. ${money(p)}, ${p.duration} минут.</p>
+        <p>Оставьте заявку или напишите в мессенджер — согласуем удобное время. ${money(p)}, ${dur(p)}.</p>
       </div>
       <div class="row">
         <button class="btn" data-book data-svc="${svc}">Записаться</button>
@@ -922,7 +923,7 @@ ${list(
   ) => `      <a class="sig rv" href="${link(r, root)}"><div class="im">${pic(r.photoCover || r.photo, { root, alt: r.title, w: 1200, h: 515 })}</div>
         <div class="bd"><h3>${r.title}</h3>
           <p>${cardText(r, `Процедура направления «${c.title}». Подробности уточню на консультации.`)}</p>
-          <div class="ft"><span class="pr">${money(r)} · ${r.duration} мин</span>
+          <div class="ft"><span class="pr">${money(r)} · ${dur(r)}</span>
             <span class="arrow">${icon('ar')}</span></div></div></a>`
 )}
     </div>

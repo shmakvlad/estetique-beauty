@@ -635,9 +635,16 @@ ${list(
     <div class="rev-grid">
 ${list(
   site.reviews.items,
-  (r) => `      <div class="rev rv"><div class="stars">${'★'.repeat(r.stars)}</div>
+  (r) => `      <div class="rev rv">
+        <div class="rev-top">
+          <div class="stars">${'★'.repeat(r.stars)}</div>
+          ${r.verified ? `<span class="verified">${icon('shield')}Отзыв подтверждён</span>` : ''}
+        </div>
+        ${r.service ? `<span class="rev-svc">${r.service}</span>` : ''}
         <p>${r.text}</p>
-        <div class="who">${avatar(r.avatar, r.name)}<div><div class="nm">${r.name}</div><div class="src">${r.source}</div></div></div></div>`
+        <div class="who">${avatar(r.avatar, r.name)}<div><div class="nm">${r.name}</div>
+          <div class="src">${r.date ? `${r.date} · ` : ''}${r.url ? `<a href="${attr(r.url)}" target="_blank" rel="noopener">${r.source}</a>` : r.source}</div></div></div>
+      </div>`
 )}
     </div>
   </div>

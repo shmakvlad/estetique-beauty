@@ -895,3 +895,15 @@ button.chip.on{background:var(--dark); color:var(--bg)}
 .proc-ind{margin-top:32px; padding-top:30px; border-top:1px solid var(--line)}
 .proc-ind h2{font-size:clamp(22px,3.4vw,28px); margin-bottom:10px}
 .proc-ind-lead{color:var(--muted); font-size:15px; line-height:1.65; margin:0 0 22px; max-width:52ch}
+
+/* ---------- КАРТОЧКА ОТЗЫВА: ДАТА, ПРОВЕРКА, ПРОЦЕДУРА ---------- */
+.rev-top{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap}
+.verified{display:inline-flex; align-items:center; gap:5px; font-size:11px; letter-spacing:.02em;
+  color:var(--hl); background:rgba(196,168,126,.14); border-radius:99px; padding:4px 10px 4px 7px;
+  white-space:nowrap}
+.verified svg{width:13px; height:13px; stroke:var(--hl); fill:none; stroke-width:1.8;
+  stroke-linecap:round; stroke-linejoin:round; flex:none}
+.rev-svc{display:inline-block; margin-top:12px; font-size:12px; color:var(--ink-2);
+  background:var(--soft); border-radius:99px; padding:4px 11px}
+.rev .src a{border-bottom:1px solid var(--line-2); transition:color .25s, border-color .25s}
+.rev .src a:hover{color:var(--hl); border-color:var(--hl)}

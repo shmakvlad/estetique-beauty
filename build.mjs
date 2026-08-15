@@ -783,14 +783,14 @@ function procedurePage(p) {
     <h1 class="proc-h1">${p.titleFull || p.title}</h1>
     <p class="proc-lead">${p.lead}</p>
 
-    <div class="proc-gal">
-      <div class="main ph">${pic(p.photoCover, { root, alt: p.titleFull || p.title, w: 1400, h: 875, eager: true })}</div>
-      <div class="thumbs">
-${list(
-  p.gallery && p.gallery.length ? p.gallery : ['b', 'c', 'd'],
-  (g, i) =>
-    `        <div class="ph">${pic(g, { root, alt: `${p.title} — фото ${i + 1}`, w: 600, h: 450 })}</div>`
-)}
+    <div class="proc-ind">
+      <h2>Кому подходит</h2>
+      <p class="proc-ind-lead">${p.indicationsLead}</p>
+      <ul class="ind">
+${list(p.indications, (i) => `        <li>${i}</li>`)}
+      </ul>
+      <div class="chips" style="margin-top:22px">
+        ${p.tags.map((t) => `<span class="chip">${t}</span>`).join('')}
       </div>
     </div>
   </div>
@@ -810,22 +810,9 @@ ${list(p.specs, (s) => `        <li><span>${s.label}</span><b>${s.value}</b></li
   </div>
 </section>
 
-<!-- ============ КОМУ ПОДХОДИТ ============ -->
-<section class="sec">
-  <div class="wrap">
-    <p class="eyebrow rv">Показания</p>
-    <h2 class="sec-h rv">Кому подходит</h2>
-    <p class="sec-sub rv">${p.indicationsLead}</p>
-    <ul class="ind rv">
-${list(p.indications, (i) => `      <li>${i}</li>`)}
-    </ul>
-    <div class="chips rv" style="margin-top:26px">
-      ${p.tags.map((t) => `<span class="chip">${t}</span>`).join('')}
-    </div>
-  </div>
-</section>
-
-<!-- ============ ДО / ПОСЛЕ ============ -->
+${
+  realPairs(p.beforeAfter).length
+    ? `<!-- ============ ДО / ПОСЛЕ ============ -->
 <section class="sec" style="background:var(--soft)">
   <div class="wrap ba-wrap">
     <div class="rv">
@@ -833,11 +820,14 @@ ${list(p.indications, (i) => `      <li>${i}</li>`)}
       <h2 class="sec-h">До и после одной процедуры</h2>
       <p class="sec-sub" style="margin-bottom:20px">Один и тот же свет, ракурс и расстояние, без ретуши
         и фильтров. Фото публикуются с согласия клиентов. Потяните ползунок, чтобы сравнить.</p>
-      <div class="chips" id="baTabs">${baTabs(p.beforeAfter, [p.beforeAfterNote], root)}</div>
+      <div class="chips" id="baTabs">\${baTabs(p.beforeAfter, [p.beforeAfterNote], root)}</div>
     </div>
-    ${beforeAfter(p.beforeAfter, root, p.beforeAfterRatio || site.results.ratio)}
+    \${beforeAfter(p.beforeAfter, root, p.beforeAfterRatio || site.results.ratio)}
   </div>
 </section>
+`
+    : ''
+}
 
 <!-- ============ КАК ПРОХОДИТ ============ -->
 <section class="sec">

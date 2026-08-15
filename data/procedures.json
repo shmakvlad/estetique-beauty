@@ -1583,7 +1583,7 @@
         {
           "title": "Осмотр и подготовка",
           "text": "Проверяю состояние полости рта и подвижность челюсти. Работаю в стерильных перчатках.",
-          "photo": "osmotr.webp"
+          "photo": "metabolicheskiy-massazh.webp"
         },
         {
           "title": "Наружный разогрев",
@@ -1708,22 +1708,22 @@
         {
           "title": "Осмотр",
           "text": "Нахожу триггерные точки и оцениваю подвижность шеи.",
-          "photo": "osmotr.webp"
+          "photo": "metabolicheskiy-massazh.webp"
         },
         {
           "title": "Разогрев",
           "text": "Поверхностные приёмы готовят мышцы к глубокой работе.",
-          "photo": "massazh-tela.webp"
+          "photo": "transbukkalnyy.webp"
         },
         {
           "title": "Глубокая проработка",
           "text": "Разминание, точечная работа с зажимами. Интенсивность подстраиваю под ваш порог.",
-          "photo": "massazh-shvz.webp"
+          "photo": "massazh-lica.webp"
         },
         {
           "title": "Растяжка и завершение",
           "text": "Мягкое вытяжение шеи и успокаивающие приёмы.",
-          "photo": "finish.webp"
+          "photo": "miolifting-massazh.webp"
         }
       ],
       "advantagesTitle": "Что даёт сеанс",
@@ -1832,7 +1832,7 @@
         {
           "title": "Разговор и осмотр",
           "text": "Выясняю характер нагрузки и болезненные зоны — сеанс строится вокруг них.",
-          "photo": "osmotr.webp"
+          "photo": "metabolicheskiy-massazh.webp"
         },
         {
           "title": "Разогрев",
@@ -1842,12 +1842,12 @@
         {
           "title": "Глубокая проработка",
           "text": "Разминание, точечная работа с триггерами, растяжение укороченных мышц.",
-          "photo": "massazh-shvz.webp"
+          "photo": "limfodrenazhnyy-massazh.webp"
         },
         {
           "title": "Завершение",
           "text": "Успокаивающие приёмы, восстановление ровного дыхания.",
-          "photo": "finish.webp"
+          "photo": "miolifting-massazh.webp"
         }
       ],
       "advantagesTitle": "Что даёт полный сеанс",
@@ -1954,12 +1954,12 @@
         {
           "title": "Оценка отёчности",
           "text": "Смотрю характер отёка и выясняю его причину — от этого зависит схема.",
-          "photo": "osmotr.webp"
+          "photo": "metabolicheskiy-massazh.webp"
         },
         {
           "title": "Работа с лимфоузлами",
           "text": "Сначала освобождаю зоны основных узлов, иначе жидкости некуда уходить.",
-          "photo": "massazh-tela.webp"
+          "photo": "miolifting-massazh.webp"
         },
         {
           "title": "Дренаж по зонам",
@@ -1969,7 +1969,7 @@
         {
           "title": "Завершение",
           "text": "Успокаивающие приёмы, рекомендации по питьевому режиму.",
-          "photo": "finish.webp"
+          "photo": "massazh-tela.webp"
         }
       ],
       "advantagesTitle": "Как это работает",

@@ -1163,7 +1163,7 @@
       "titleMega": "Peel Peach",
       "page": true,
       "photo": "",
-      "photoCover": "sostav.webp",
+      "photoCover": "peel-peach-kokteil.webp",
       "meta": {
         "title": "Peel Peach коктейль в Минске — 180 BYN | Estétique Beauty",
         "description": "Пилинг на экстракте персика и фруктовых кислотах: обновление, ровный тон, увлажнение. 180 BYN. Показания, этапы, противопоказания."
@@ -1220,7 +1220,7 @@
         {
           "title": "Нанесение коктейля",
           "text": "Состав распределяется по массажным линиям и выдерживается расчётное время.",
-          "photo": "sostav.webp"
+          "photo": "peel-peach-kokteil.webp"
         },
         {
           "title": "Успокаивающий уход",
@@ -1273,7 +1273,7 @@
         "Усиленное увлажнение первые дни"
       ],
       "careNote": "Лёгкое шелушение на второй–третий день возможно и является нормальной реакцией.",
-      "gallery": ["ochishchenie.webp", "finish.webp", "osmotr.webp"]
+      "gallery": ["osmotr.webp", "ochishchenie.webp", "finish.webp"]
     },
     {
       "slug": "plasticheskiy-massazh-lica",

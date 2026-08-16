@@ -76,6 +76,34 @@
     "photo": "main.webp",
     "photoAlt": "Косметолог проводит процедуру ухода за лицом"
   },
+  "offers": {
+    "autoplay": 7000,
+    "cta": "Записаться",
+    "items": [
+      {
+        "badge": "Счастливые часы",
+        "icon": "clock",
+        "title": "Скидка 20%",
+        "subtitle": "с 10:00 до 17:00 в будние дни",
+        "text": "Скидка 20% в «Счастливые часы» на все процедуры при посещении с 10:00 до 17:00 в будние дни.",
+        "photo": "akciya-schastlivye-chasy.webp",
+        "photoAlt": "Косметолог наносит сыворотку на кожу лица",
+        "photoPos": "62% 50%",
+        "photoPosNarrow": "70% 42%"
+      },
+      {
+        "badge": "Подарок",
+        "icon": "spark",
+        "title": "Скидка 25%",
+        "subtitle": "В ваш День Рождения!",
+        "text": "Дарим скидку 25% на все процедуры кабинета в ваш День Рождения.",
+        "photo": "akciya-den-rozhdeniya.webp",
+        "photoAlt": "Массаж спины в косметическом кабинете",
+        "photoPos": "58% 50%",
+        "photoPosNarrow": "66% 45%"
+      }
+    ]
+  },
   "services": {
     "eyebrow": "Услуги и цены",
     "title": "Что мы делаем",
@@ -404,24 +432,24 @@
   ],
   "nav": [
     {
-      "label": "Результаты",
-      "href": "#results"
-    },
-    {
       "label": "О мастере",
       "href": "#about"
-    },
-    {
-      "label": "Отзывы",
-      "href": "#reviews"
     },
     {
       "label": "Обучение",
       "href": "#edu"
     },
     {
+      "label": "Сертификат",
+      "href": "#gift"
+    },
+    {
       "label": "Контакты",
       "href": "#contacts"
+    },
+    {
+      "label": "Как добраться",
+      "href": "#map"
     }
   ]
 }

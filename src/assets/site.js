@@ -490,3 +490,83 @@
     return digitsOf(el.value).length === LEN;
   };
 })();
+
+/* ---------- АКЦИИ: КАРУСЕЛЬ ---------- */
+(function () {
+  var box = document.getElementById('ofr');
+  if (!box) return;
+
+  var slides = box.querySelectorAll('.ofr-s');
+  var navs = box.querySelectorAll('.ofr-nav');
+  var dotsBox = document.getElementById('ofrDots');
+
+  // Одна акция — карусель не нужна, прячем стрелки и точки
+  if (slides.length < 2) {
+    for (var n = 0; n < navs.length; n++) navs[n].style.display = 'none';
+    if (dotsBox) dotsBox.style.display = 'none';
+    return;
+  }
+
+  var dots = dotsBox ? dotsBox.querySelectorAll('.ofr-dot') : [];
+  var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var delay = parseInt(box.dataset.autoplay, 10) || 0;
+  var cur = 0,
+    timer = null;
+
+  var show = function (n) {
+    cur = (n + slides.length) % slides.length;
+    for (var k = 0; k < slides.length; k++) slides[k].classList.toggle('on', k === cur);
+    for (var d = 0; d < dots.length; d++) dots[d].classList.toggle('on', d === cur);
+  };
+  var stop = function () {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+  };
+  var play = function () {
+    stop();
+    if (delay && !still)
+      timer = setInterval(function () {
+        show(cur + 1);
+      }, delay);
+  };
+  var go = function (n) {
+    show(n);
+    play();
+  };
+
+  box.querySelector('.ofr-prev').addEventListener('click', function () {
+    go(cur - 1);
+  });
+  box.querySelector('.ofr-next').addEventListener('click', function () {
+    go(cur + 1);
+  });
+  for (var d = 0; d < dots.length; d++) {
+    dots[d].addEventListener('click', function (e) {
+      go(parseInt(e.currentTarget.dataset.i, 10));
+    });
+  }
+
+  // Пауза, пока курсор на баннере: не переключать текст под читающим
+  box.addEventListener('mouseenter', stop);
+  box.addEventListener('mouseleave', play);
+
+  // Листание пальцем. Порог в 40px, чтобы обычное нажатие на кнопку не листало
+  var x0 = null;
+  box.addEventListener(
+    'pointerdown',
+    function (e) {
+      x0 = e.clientX;
+    },
+    { passive: true }
+  );
+  box.addEventListener('pointerup', function (e) {
+    if (x0 === null) return;
+    var dx = e.clientX - x0;
+    x0 = null;
+    if (Math.abs(dx) > 40) go(dx < 0 ? cur + 1 : cur - 1);
+  });
+
+  play();
+})();

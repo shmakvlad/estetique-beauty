@@ -438,11 +438,54 @@ const baTabs = (pairs, fallback, root = '') => {
 // ═══════════════════ ГЛАВНАЯ ═══════════════════
 const H = site.hero;
 
+// Баннер акций: слайды сложены стопкой, показывается один. Фотографии светлые,
+// поэтому вместо затемнения — мягкая заливка цветом фона от края с текстом.
+const O = site.offers || {};
+const offerItems = O.items || [];
+
+const offerSlide = (o, i) => `
+      <article class="ofr-s${i ? '' : ' on'}" role="group" aria-roledescription="слайд" aria-label="${i + 1} из ${offerItems.length}">
+        <img class="ofr-img" src="images/${o.photo}" alt="${attr(o.photoAlt || o.title)}"
+          width="1168" height="784"${i ? ' loading="lazy" decoding="async"' : ''}
+          style="--pos:${attr(o.photoPos || 'center')};--pos-n:${attr(o.photoPosNarrow || o.photoPos || 'center')}">
+        <div class="ofr-body">
+          ${o.badge ? `<span class="ofr-badge">${o.icon ? icon(o.icon) : ''}${o.badge}</span>` : ''}
+          <p class="ofr-t">${o.title}</p>
+          ${o.subtitle ? `<p class="ofr-st">${o.subtitle}</p>` : ''}
+          ${o.text ? `<p class="ofr-x">${o.text}</p>` : ''}
+          ${O.cta ? `<button class="btn" data-book data-svc="${attr(`${o.title} — ${o.subtitle || o.badge || ''}`)}">${O.cta}</button>` : ''}
+        </div>
+      </article>`;
+
+const offersBlock = !offerItems.length
+  ? ''
+  : `
+<!-- ============ АКЦИИ ============ -->
+<section class="offers">
+  <div class="wrap">
+    <div class="ofr rv" id="ofr" data-autoplay="${O.autoplay || 0}" aria-roledescription="carousel" aria-label="Акции кабинета">
+${offerItems.map(offerSlide).join('')}
+      <button class="ofr-nav ofr-prev" type="button" aria-label="Предыдущая акция">${icon('ar')}</button>
+      <button class="ofr-nav ofr-next" type="button" aria-label="Следующая акция">${icon('ar')}</button>
+    </div>
+    <div class="ofr-dots" id="ofrDots">
+${offerItems.map((o, i) => `      <button class="ofr-dot${i ? '' : ' on'}" type="button" data-i="${i}" aria-label="${attr(o.title)}"></button>`).join('\n')}
+    </div>
+  </div>
+</section>
+`;
+
 const indexBody = `<!-- ============ HERO ============ -->
 <section class="hero">
   <div class="wrap hero-in">
     <div>
-      <span class="badge">${icon('spark')}${H.badge}</span>
+      <div class="hero-top">
+        <span class="badge">${icon('spark')}${H.badge}</span>
+        <div class="hero-meta">
+          <span class="hm-a">${icon('pin')}${C.address}</span>
+          <span class="hm-h">${icon('clock')}${C.hoursShort}</span>
+        </div>
+      </div>
       <h1>${H.h1}</h1>
       <p class="lead">${H.lead}</p>
       <div class="hero-actions">
@@ -480,7 +523,7 @@ ${list(H.stats, (s) => `          <div><b data-to="${s.to}"${s.suffix ? ` data-s
     </div>
   </div>
 </section>
-
+${offersBlock}
 <!-- ============ УСЛУГИ И ЦЕНЫ ============ -->
 <section class="sec" id="services">
   <div class="wrap">
@@ -831,7 +874,7 @@ ${list(
       </div>
     </div>
 
-    <div class="col rv book-map">
+    <div class="col rv book-map" id="map">
       <div class="map">
         <div class="canvas${C.mapEmbed ? ' has-map' : ''}">${
           C.mapEmbed

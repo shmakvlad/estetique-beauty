@@ -342,16 +342,21 @@ button{font:inherit; cursor:pointer; border:0; background:none; color:inherit}
      Пропорция задаётся в data/site.json → about.photoRatio */
   .about .im{max-width:none; align-self:start}
 }
-.qual{background:var(--surface); border:1px solid var(--line); border-radius:var(--r-lg); padding:22px 24px}
-.qual h3{font-size:20px; margin-bottom:16px}
+.qual{background:var(--surface); border:1px solid var(--line); border-radius:var(--r-lg); padding:20px 18px}
+.qual h3{font-size:18px; margin-bottom:13px}
 .tl{display:grid; border-left:1px solid var(--line-2); margin-left:5px}
-.tl li{position:relative; padding:0 0 13px 19px}
+/* Год стоит слева в своей колонке, а не строкой над текстом: записей одиннадцать,
+   и так список вдвое короче по высоте */
+.tl li{position:relative; display:grid; grid-template-columns:30px minmax(0,1fr); gap:0 8px;
+  align-items:baseline; padding:0 0 9px 15px}
 .tl li:last-child{padding-bottom:0}
-.tl li:before{content:""; position:absolute; left:-5px; top:6px; width:9px; height:9px;
+.tl li:before{content:""; position:absolute; left:-5px; top:5px; width:9px; height:9px;
   border-radius:50%; background:var(--gold); border:2px solid var(--surface)}
-.tl .yr{display:block; font-family:"Playfair Display",Georgia,serif; font-size:15px;
-  color:var(--hl); line-height:1; margin-bottom:4px; font-variant-numeric:tabular-nums}
+.tl .yr{font-family:"Playfair Display",Georgia,serif; font-size:14px;
+  color:var(--hl); line-height:1.45; font-variant-numeric:tabular-nums}
 .tl p{margin:0; font-size:13px; line-height:1.45; color:var(--ink-2)}
+.tl .org{font-weight:500; color:var(--ink); white-space:nowrap}
+.tl .soon{font-style:normal; color:var(--hl)}
 .docs{display:flex; gap:9px; margin-top:18px; flex-wrap:wrap}
 .doc{width:58px; height:74px; border:1px solid var(--line-2); border-radius:8px; background:var(--surface);
   display:flex; align-items:center; justify-content:center; font-size:11px; color:var(--muted);

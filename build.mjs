@@ -44,6 +44,23 @@ const list = (a, f) => a.map(f).join('\n');
 // Экранирование для значений атрибутов: & в адресе иначе читается как начало спецсимвола
 const attr = (v = '') => String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
 
+// Строка образования целиком: заведение, вид обучения, название программы.
+// Полное название заведения — в подсказке при наведении
+const orgTitle = (short) => {
+  if (!short) return '';
+  const full = (site.about.orgs || {})[short];
+  return ` title="${attr(full ? `${short} — ${full}` : short)}"`;
+};
+const qualLine = (q) =>
+  [
+    q.planned ? `<em class="soon">${q.planned}.</em>` : '',
+    q.org ? `<b class="org">${q.org}</b>` : '',
+    q.kind || '',
+    q.text ? `«${q.text}»` : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
 // Фото из src/images или градиентная заглушка, если файла ещё нет.
 // В data достаточно указать имя файла: "photo": "mariya.webp"
 const isFile = (v) => typeof v === 'string' && /\.(webp|jpg|jpeg|png|avif)$/i.test(v);
@@ -646,8 +663,8 @@ ${list(
       <ul class="tl">
 ${list(
   site.about.qualification,
-  (q) => `        <li><span class="yr">${q.year}</span>
-          <p>${q.text}</p></li>`
+  (q) => `        <li${orgTitle(q.org)}><span class="yr">${q.year}</span>
+          <p>${qualLine(q)}</p></li>`
 )}
       </ul>
     </div>

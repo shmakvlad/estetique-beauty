@@ -2,7 +2,7 @@
 # Выгрузка сайта на хостинг.
 #
 #   npm run deploy              — собрать и залить
-#   npm run deploy -- --dry-run — показать, что изменилось бы, ничего не трогая
+#   npm run deploy -- --dry-run — показать, что уехало бы, ничего не трогая
 #
 # Настройки берутся из файла .deploy.env в корне проекта. Он в .gitignore,
 # в репозиторий не попадает. Пароля в нём нет: для SSH используется ключ,
@@ -21,7 +21,8 @@ if [ ! -f "$CONF" ]; then
 
   DEPLOY_METHOD=lftp
   DEPLOY_HOST=vh171.hoster.by
-  DEPLOY_PATH=/www/torapava.by
+  DEPLOY_PATH=/
+  DEPLOY_SITE_URL=https://torapava.by
 
 Пароль сюда НЕ вписывайте — он лежит в ~/.netrc.
 Подробности — docs/vykladka-hoster-by.md
@@ -32,14 +33,12 @@ fi
 # shellcheck disable=SC1090
 . "./$CONF"
 
-: "${DEPLOY_METHOD:?не задан DEPLOY_METHOD в .deploy.env (rsync или lftp)}"
+: "${DEPLOY_METHOD:?не задан DEPLOY_METHOD в .deploy.env (lftp, curl или rsync)}"
 : "${DEPLOY_HOST:?не задан DEPLOY_HOST в .deploy.env}"
 : "${DEPLOY_PATH:?не задан DEPLOY_PATH в .deploy.env}"
 
 DRY=no
-if [ "${1:-}" = "--dry-run" ]; then
-  DRY=yes
-fi
+[ "${1:-}" = "--dry-run" ] && DRY=yes
 
 echo "→ Собираю боевую версию"
 npm run build:prod
@@ -63,78 +62,35 @@ if [ -n "$BAD" ]; then
   exit 1
 fi
 
-echo "→ Заливаю dist → ${DEPLOY_HOST}:${DEPLOY_PATH}"
-[ "$DRY" = yes ] && echo "  (пробный запуск, ничего не меняется)"
+FILES=()
+while IFS= read -r f; do
+  rel="${f#dist/}"
+  [ "$rel" = "$KEEP" ] && continue
+  FILES+=("$rel")
+done < <(find dist -type f | sort)
+
+# Сертификат FTP-сервера самоподписанный, обычным удостоверяющим центрам он
+# неизвестен. Поэтому не отключаем проверку, а доверяем конкретному
+# сертификату сервера — он лежит в .deploy-cert.pem
+CACERT="${DEPLOY_CACERT:-.deploy-cert.pem}"
+SITE="${DEPLOY_SITE_URL:-https://${DEPLOY_HOST}}"
+BASE="ftp://${DEPLOY_HOST}${DEPLOY_PATH%/}"
+
+CURL_FTP=(--netrc --ssl-reqd --ftp-create-dirs -sS --fail --connect-timeout 20)
+[ -f "$CACERT" ] && CURL_FTP+=(--cacert "$CACERT")
+
+echo "→ Заливаю dist → ${DEPLOY_HOST}:${DEPLOY_PATH} (${#FILES[@]} файлов, способ $DEPLOY_METHOD)"
+if [ "$DRY" = yes ]; then
+  printf '  %s\n' "${FILES[@]}"
+  echo "✓ Пробный запуск закончен, на сервере ничего не изменилось"
+  exit 0
+fi
 
 case "$DEPLOY_METHOD" in
 rsync)
   : "${DEPLOY_USER:?не задан DEPLOY_USER в .deploy.env}"
-  PORT="${DEPLOY_PORT:-22}"
-  ARGS=(-rlvz --delete --exclude "$KEEP" --no-perms --no-owner --no-group)
-  [ "$DRY" = yes ] && ARGS+=(--dry-run)
-  rsync "${ARGS[@]}" -e "ssh -p $PORT" dist/ "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/"
-  ;;
-curl)
-  # Способ без установки чего-либо: curl уже есть в macOS.
-  # Отличие от lftp — не удаляет с сервера файлы, которых больше нет в сборке.
-  #
-  # FTP у hoster.by рвёт передачу произвольно: файл приходит обрезанным, а
-  # curl при этом рапортует об успехе. Поэтому после каждой загрузки размер
-  # сверяется с локальным по http, и несовпавшие файлы грузятся заново.
-  BASE="ftp://${DEPLOY_HOST}${DEPLOY_PATH%/}"
-  SITE="${DEPLOY_SITE_URL:-http://${DEPLOY_HOST}}"
-
-  # --ssl-reqd: соединение всегда шифруется, открытым текстом пароль не уйдёт.
-  # Сертификат на FTP самоподписанный, обычным удостоверяющим центрам он
-  # неизвестен — поэтому не отключаем проверку, а доверяем конкретному
-  # сертификату сервера из .deploy-cert.pem.
-  FTP_ARGS=(--netrc --ssl-reqd --ftp-create-dirs -sS --fail --connect-timeout 20)
-  CACERT="${DEPLOY_CACERT:-.deploy-cert.pem}"
-  [ -f "$CACERT" ] && FTP_ARGS+=(--cacert "$CACERT")
-
-  FILES=()
-  while IFS= read -r f; do
-    rel="${f#dist/}"
-    [ "$rel" = "$KEEP" ] && continue
-    FILES+=("$rel")
-  done < <(find dist -type f | sort)
-
-  if [ "$DRY" = yes ]; then
-    printf '  %s\n' "${FILES[@]}"
-    echo "  — всего файлов: ${#FILES[@]}"
-  else
-    echo "  файлов: ${#FILES[@]}"
-
-    TODO=("${FILES[@]}")
-    for pass in 1 2 3 4 5 6 7 8; do
-      [ ${#TODO[@]} -eq 0 ] && break
-      [ "$pass" -gt 1 ] && echo "  повтор $pass: осталось ${#TODO[@]}"
-
-      for rel in "${TODO[@]}"; do
-        curl "${FTP_ARGS[@]}" -T "dist/$rel" "$BASE/$rel" || true
-      done
-
-      # Сверка: размер файла глазами обычного посетителя сайта.
-      # .php и .htaccess сервер наружу не отдаёт — их так не проверить.
-      FAILED=()
-      for rel in "${TODO[@]}"; do
-        case "$rel" in
-        *.php | *.htaccess) continue ;;
-        esac
-        want=$(wc -c <"dist/$rel" | tr -d ' ')
-        got=$(curl -sS -o /dev/null -w '%{size_download}' --max-time 30 "$SITE/$rel" 2>/dev/null)
-        [ "$got" != "$want" ] && FAILED+=("$rel")
-      done
-      TODO=("${FAILED[@]}")
-    done
-
-    if [ ${#TODO[@]} -gt 0 ]; then
-      echo "Не удалось залить целиком после восьми попыток:" >&2
-      printf '  %s\n' "${TODO[@]}" >&2
-      exit 1
-    fi
-    echo "  все файлы сверены по размеру — совпадают"
-  fi
+  rsync -rlvz --delete --exclude "$KEEP" --no-perms --no-owner --no-group \
+    -e "ssh -p ${DEPLOY_PORT:-22}" dist/ "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/"
   ;;
 lftp)
   if ! command -v lftp >/dev/null 2>&1; then
@@ -142,18 +98,77 @@ lftp)
     echo "Либо укажите DEPLOY_METHOD=curl — он есть в системе изначально" >&2
     exit 1
   fi
-  MIRROR="mirror -R --delete --parallel=4 --exclude-glob $KEEP"
-  [ "$DRY" = yes ] && MIRROR="$MIRROR --dry-run"
-  lftp -c "set ftp:ssl-allow true; set net:max-retries 2; open $DEPLOY_HOST; $MIRROR dist $DEPLOY_PATH"
+  # mirror -R заливает и удаляет с сервера то, чего больше нет в сборке.
+  # Файл с токеном исключён, поэтому удаление его не касается.
+  # dns:order inet — только IPv4: у сервера есть адрес IPv6, но маршрута
+  # до него с этой машины нет, и lftp упирается в Network is unreachable
+  lftp -c "
+    set dns:order inet
+    set ssl:ca-file $CACERT
+    set ftp:ssl-force true
+    set ftp:ssl-protect-data true
+    set net:max-retries 3
+    set net:timeout 20
+    set mirror:parallel-transfer-count 2
+    open $DEPLOY_HOST
+    mirror -R --delete --exclude-glob $KEEP dist $DEPLOY_PATH
+  "
+  ;;
+curl)
+  # Без установки чего-либо: curl есть в macOS изначально.
+  # В отличие от lftp не удаляет с сервера лишнее.
+  for rel in "${FILES[@]}"; do
+    curl "${CURL_FTP[@]}" -T "dist/$rel" "$BASE/$rel" || true
+  done
   ;;
 *)
-  echo "Неизвестный DEPLOY_METHOD=$DEPLOY_METHOD — ожидается curl, lftp или rsync" >&2
+  echo "Неизвестный DEPLOY_METHOD=$DEPLOY_METHOD — ожидается lftp, curl или rsync" >&2
   exit 1
   ;;
 esac
 
-if [ "$DRY" = yes ]; then
-  echo "✓ Пробный запуск закончен, на сервере ничего не изменилось"
-else
-  echo "✓ Готово. Проверьте https://torapava.by и отправьте тестовую заявку"
+# ── Сверка целостности ───────────────────────────────────────────────────
+# FTP у hoster.by произвольно рвёт передачу: файл приходит обрезанным, а
+# программа выгрузки при этом рапортует об успехе. Поэтому размер каждого
+# файла сверяется с локальным по адресу сайта, а несовпавшие льются заново.
+# .php и .htaccess сервер наружу не отдаёт — их так не проверить.
+echo "→ Сверяю размеры через $SITE"
+
+TODO=()
+for rel in "${FILES[@]}"; do
+  case "$rel" in *.php | *.htaccess) continue ;; esac
+  TODO+=("$rel")
+done
+
+# Пустой массив в bash 3.2 из macOS при set -u разворачивать нельзя —
+# отсюда проверки длины перед каждым перебором
+for pass in 1 2 3 4 5 6 7 8; do
+  [ ${#TODO[@]} -eq 0 ] && break
+
+  FAILED=()
+  for rel in "${TODO[@]}"; do
+    want=$(wc -c <"dist/$rel" | tr -d ' ')
+    got=$(curl -sS -o /dev/null -w '%{size_download}' --max-time 30 "$SITE/$rel" 2>/dev/null || echo 0)
+    [ "$got" != "$want" ] && FAILED+=("$rel")
+  done
+
+  if [ ${#FAILED[@]} -eq 0 ]; then
+    TODO=()
+    break
+  fi
+
+  TODO=("${FAILED[@]}")
+  echo "  недогружено: ${#TODO[@]}, перезаливаю (попытка $pass)"
+  for rel in "${TODO[@]}"; do
+    curl "${CURL_FTP[@]}" -T "dist/$rel" "$BASE/$rel" || true
+  done
+done
+
+if [ ${#TODO[@]} -gt 0 ]; then
+  echo "Не удалось залить целиком после восьми попыток:" >&2
+  printf '  %s\n' "${TODO[@]}" >&2
+  exit 1
 fi
+
+echo "✓ Готово: все файлы сверены по размеру, совпадают"
+echo "  Проверьте $SITE и отправьте тестовую заявку"

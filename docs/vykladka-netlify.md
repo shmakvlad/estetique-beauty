@@ -205,7 +205,7 @@ npm i -g netlify-cli      # один раз
 
 ```
 TELEGRAM_BOT_TOKEN=токен_от_BotFather
-TELEGRAM_CHAT_ID=-5497218409
+TELEGRAM_CHAT_ID=-1004282650500
 ```
 
 Запустите:

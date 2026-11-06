@@ -136,9 +136,20 @@ if ($response === false) {
 }
 
 if ($status < 200 || $status >= 300) {
-    // В лог пишем ответ Telegram, но не токен — он есть в адресе запроса
+    // Причину отказа возвращаем в ответе: на shared-хостинге error_log
+    // уходит в недоступный журнал, и иначе ошибку не увидеть.
+    // Ни токена, ни id чата здесь нет — только код и пояснение Telegram.
+    $info = json_decode((string) $response, true);
     error_log('notify.php: Telegram ответил ' . $status . ' ' . substr((string) $response, 0, 300));
-    reply(502, ['ok' => false, 'error' => 'telegram_failed']);
+    // Если группу превратили в супергруппу, Telegram сообщает её новый id —
+    // показываем его, чтобы было что вписать в config.php
+    reply(502, [
+        'ok' => false,
+        'error' => 'telegram_failed',
+        'telegram_code' => $status,
+        'telegram_description' => is_array($info) ? ($info['description'] ?? null) : null,
+        'new_chat_id' => is_array($info) ? ($info['parameters']['migrate_to_chat_id'] ?? null) : null,
+    ]);
 }
 
 reply(200, ['ok' => true]);

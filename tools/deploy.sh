@@ -77,33 +77,63 @@ rsync)
 curl)
   # Способ без установки чего-либо: curl уже есть в macOS.
   # Отличие от lftp — не удаляет с сервера файлы, которых больше нет в сборке.
+  #
+  # FTP у hoster.by рвёт передачу произвольно: файл приходит обрезанным, а
+  # curl при этом рапортует об успехе. Поэтому после каждой загрузки размер
+  # сверяется с локальным по http, и несовпавшие файлы грузятся заново.
   BASE="ftp://${DEPLOY_HOST}${DEPLOY_PATH%/}"
-  COUNT=0
+  SITE="${DEPLOY_SITE_URL:-http://${DEPLOY_HOST}}"
+
   # --ssl-reqd: соединение всегда шифруется, открытым текстом пароль не уйдёт.
-  # На FTP у hoster.by сертификат самоподписанный, обычным удостоверяющим
-  # центрам он неизвестен. Поэтому не отключаем проверку, а доверяем
-  # конкретному сертификату сервера — он лежит в .deploy-cert.pem.
-  ARGS=(--netrc --ssl-reqd --ftp-create-dirs -sS --fail)
+  # Сертификат на FTP самоподписанный, обычным удостоверяющим центрам он
+  # неизвестен — поэтому не отключаем проверку, а доверяем конкретному
+  # сертификату сервера из .deploy-cert.pem.
+  FTP_ARGS=(--netrc --ssl-reqd --ftp-create-dirs -sS --fail --connect-timeout 20)
   CACERT="${DEPLOY_CACERT:-.deploy-cert.pem}"
-  if [ -f "$CACERT" ]; then
-    ARGS+=(--cacert "$CACERT")
-  fi
+  [ -f "$CACERT" ] && FTP_ARGS+=(--cacert "$CACERT")
+
+  FILES=()
   while IFS= read -r f; do
     rel="${f#dist/}"
     [ "$rel" = "$KEEP" ] && continue
-    COUNT=$((COUNT + 1))
-    if [ "$DRY" = yes ]; then
-      echo "  $rel"
-    else
-      ARGS+=(-T "$f" --url "$BASE/$rel")
-    fi
-  done < <(find dist -type f)
+    FILES+=("$rel")
+  done < <(find dist -type f | sort)
 
   if [ "$DRY" = yes ]; then
-    echo "  — всего файлов: $COUNT"
+    printf '  %s\n' "${FILES[@]}"
+    echo "  — всего файлов: ${#FILES[@]}"
   else
-    echo "  файлов: $COUNT, соединение одно на всех"
-    curl "${ARGS[@]}"
+    echo "  файлов: ${#FILES[@]}"
+
+    TODO=("${FILES[@]}")
+    for pass in 1 2 3 4 5 6 7 8; do
+      [ ${#TODO[@]} -eq 0 ] && break
+      [ "$pass" -gt 1 ] && echo "  повтор $pass: осталось ${#TODO[@]}"
+
+      for rel in "${TODO[@]}"; do
+        curl "${FTP_ARGS[@]}" -T "dist/$rel" "$BASE/$rel" || true
+      done
+
+      # Сверка: размер файла глазами обычного посетителя сайта.
+      # .php и .htaccess сервер наружу не отдаёт — их так не проверить.
+      FAILED=()
+      for rel in "${TODO[@]}"; do
+        case "$rel" in
+        *.php | *.htaccess) continue ;;
+        esac
+        want=$(wc -c <"dist/$rel" | tr -d ' ')
+        got=$(curl -sS -o /dev/null -w '%{size_download}' --max-time 30 "$SITE/$rel" 2>/dev/null)
+        [ "$got" != "$want" ] && FAILED+=("$rel")
+      done
+      TODO=("${FAILED[@]}")
+    done
+
+    if [ ${#TODO[@]} -gt 0 ]; then
+      echo "Не удалось залить целиком после восьми попыток:" >&2
+      printf '  %s\n' "${TODO[@]}" >&2
+      exit 1
+    fi
+    echo "  все файлы сверены по размеру — совпадают"
   fi
   ;;
 lftp)

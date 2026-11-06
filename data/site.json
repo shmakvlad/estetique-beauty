@@ -10,7 +10,7 @@
   "seo": {
     "_note": "siteUrl — боевой адрес сайта. Без него не работают canonical, карта сайта и превью в соцсетях. metrikaId — номер счётчика Яндекс.Метрики.",
     "siteUrl": "https://torapava.by",
-    "metrikaId": "",
+    "metrikaId": "114107817",
     "ogImage": "main.webp",
     "geo": {
       "lat": "53.9366",

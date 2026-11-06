@@ -53,6 +53,16 @@ fi
 # Без этого исключения синхронизация удалила бы его при первой же выгрузке.
 KEEP='api/config.php'
 
+# Пробел или кириллица в имени файла ломают адрес на сервере, и выгрузка
+# обрывается на середине. Ловим это здесь, пока ничего не отправлено.
+BAD=$(find dist -type f | grep -E ' |[^ -~]' || true)
+if [ -n "$BAD" ]; then
+  echo "Выгрузка отменена: в именах файлов пробелы или нелатинские символы." >&2
+  echo "$BAD" >&2
+  echo "Переименуйте их в src/images и поправьте ссылки в data/*.json" >&2
+  exit 1
+fi
+
 echo "→ Заливаю dist → ${DEPLOY_HOST}:${DEPLOY_PATH}"
 [ "$DRY" = yes ] && echo "  (пробный запуск, ничего не меняется)"
 
@@ -64,9 +74,42 @@ rsync)
   [ "$DRY" = yes ] && ARGS+=(--dry-run)
   rsync "${ARGS[@]}" -e "ssh -p $PORT" dist/ "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/"
   ;;
+curl)
+  # Способ без установки чего-либо: curl уже есть в macOS.
+  # Отличие от lftp — не удаляет с сервера файлы, которых больше нет в сборке.
+  BASE="ftp://${DEPLOY_HOST}${DEPLOY_PATH%/}"
+  COUNT=0
+  # --ssl-reqd: соединение всегда шифруется, открытым текстом пароль не уйдёт.
+  # На FTP у hoster.by сертификат самоподписанный, обычным удостоверяющим
+  # центрам он неизвестен. Поэтому не отключаем проверку, а доверяем
+  # конкретному сертификату сервера — он лежит в .deploy-cert.pem.
+  ARGS=(--netrc --ssl-reqd --ftp-create-dirs -sS --fail)
+  CACERT="${DEPLOY_CACERT:-.deploy-cert.pem}"
+  if [ -f "$CACERT" ]; then
+    ARGS+=(--cacert "$CACERT")
+  fi
+  while IFS= read -r f; do
+    rel="${f#dist/}"
+    [ "$rel" = "$KEEP" ] && continue
+    COUNT=$((COUNT + 1))
+    if [ "$DRY" = yes ]; then
+      echo "  $rel"
+    else
+      ARGS+=(-T "$f" --url "$BASE/$rel")
+    fi
+  done < <(find dist -type f)
+
+  if [ "$DRY" = yes ]; then
+    echo "  — всего файлов: $COUNT"
+  else
+    echo "  файлов: $COUNT, соединение одно на всех"
+    curl "${ARGS[@]}"
+  fi
+  ;;
 lftp)
   if ! command -v lftp >/dev/null 2>&1; then
     echo "Не установлен lftp. Поставьте его: brew install lftp" >&2
+    echo "Либо укажите DEPLOY_METHOD=curl — он есть в системе изначально" >&2
     exit 1
   fi
   MIRROR="mirror -R --delete --parallel=4 --exclude-glob $KEEP"
@@ -74,7 +117,7 @@ lftp)
   lftp -c "set ftp:ssl-allow true; set net:max-retries 2; open $DEPLOY_HOST; $MIRROR dist $DEPLOY_PATH"
   ;;
 *)
-  echo "Неизвестный DEPLOY_METHOD=$DEPLOY_METHOD — ожидается rsync или lftp" >&2
+  echo "Неизвестный DEPLOY_METHOD=$DEPLOY_METHOD — ожидается curl, lftp или rsync" >&2
   exit 1
   ;;
 esac

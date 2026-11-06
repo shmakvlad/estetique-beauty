@@ -1,0 +1,13 @@
+# Подстраховка: закрыть файл с токеном на случай, если PHP на сервере
+# окажется выключен и .php начнёт отдаваться как обычный текст.
+# Надёжнее держать токен в notify-config.php на уровень выше корня сайта —
+# туда веб-сервер не заглядывает в принципе.
+<Files "config.php">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</Files>

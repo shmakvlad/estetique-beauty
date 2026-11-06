@@ -9,6 +9,7 @@
     "build:prod": "node build.mjs",
     "images": "arch -arm64 python3 tools/convert-images.py",
     "where": "node tools/where.mjs",
+    "deploy": "bash tools/deploy.sh",
     "dev": "netlify dev"
   }
 }

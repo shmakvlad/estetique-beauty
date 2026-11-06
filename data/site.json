@@ -9,7 +9,7 @@
   },
   "seo": {
     "_note": "siteUrl — боевой адрес сайта. Без него не работают canonical, карта сайта и превью в соцсетях. metrikaId — номер счётчика Яндекс.Метрики.",
-    "siteUrl": "",
+    "siteUrl": "https://torapava.by",
     "metrikaId": "",
     "ogImage": "main.webp",
     "geo": {
@@ -44,7 +44,7 @@
   },
   "forms": {
     "_note": "Адрес обработчика заявок. При переезде на другой хостинг меняется только он.",
-    "endpoint": "/api/notify"
+    "endpoint": "/api/notify.php"
   },
   "hero": {
     "badge": "Косметический кабинет в Минске",

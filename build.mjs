@@ -1109,6 +1109,11 @@ cpSync(join(ROOT, 'src/assets'), join(dist, 'assets'), { recursive: true });
 if (existsSync(join(ROOT, 'src/images'))) {
   cpSync(join(ROOT, 'src/images'), join(dist, 'images'), { recursive: true });
 }
+// Файлы, которые кладутся в корень сайта как есть: обработчик заявок на PHP,
+// .htaccess и всё, что понадобится обычному хостингу
+if (existsSync(join(ROOT, 'src/static'))) {
+  cpSync(join(ROOT, 'src/static'), dist, { recursive: true });
+}
 
 writeFileSync(
   join(dist, 'index.html'),

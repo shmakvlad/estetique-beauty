@@ -463,7 +463,9 @@ button{font:inherit; cursor:pointer; border:0; background:none; color:inherit}
 .crs .btn:hover{background:#E7D5BC}
 
 /* ---------- СЕРТИФИКАТ ---------- */
-.gift{background:var(--soft)}
+/* Основной фон, а не тёплый: выше идёт «Как всё проходит» на тёплом,
+   и два одинаковых блока подряд сливались бы в один */
+.gift{background:var(--bg)}
 .gift-in{display:grid; gap:28px; padding-block:54px; align-items:center}
 .gift-card{aspect-ratio:1/1; border-radius:var(--r-lg); position:relative; overflow:hidden;
   background:linear-gradient(150deg,#E9DBC8,#C9B096 55%,#A0866B);
@@ -994,3 +996,16 @@ button.chip.on{background:var(--dark); color:var(--bg)}
   .ofr-prev{right:92px; bottom:32px}
   .ofr-next{right:32px; bottom:32px}
 }
+
+/* ---------- ТЁМНАЯ СЕКЦИЯ ОТЗЫВОВ ---------- */
+/* Тёмный цвет перешёл сюда от убранного блока курсов массажа.
+   Карточки отзывов остаются светлыми — на тёмном фоне они читаются
+   лучше, и текст отзыва не приходится перекрашивать */
+.sec-dark{background:var(--dark); color:#F1EBE3}
+.sec-dark .eyebrow{color:var(--sand)}
+.sec-dark .sec-h{color:#F7F3EE}
+.sec-dark .rev-links .cap{color:#A2968A}
+/* Карточка светлая, поэтому внутри неё возвращаем обычный цвет текста:
+   иначе всё, у чего нет своего цвета (имя автора), наследует светлый
+   от секции и пропадает на белом */
+.sec-dark .rev{color:var(--ink)}

@@ -198,7 +198,7 @@ const footer = (root) => `<footer class="ftr">
     <div>
       <a href="${hrefHome(root)}" class="logo" style="margin-bottom:14px"><b>${site.brand.name}</b><span>${site.brand.suffix}</span></a>
       <p style="font-size:14.5px; color:var(--muted); line-height:1.6; margin:0">
-        Косметический кабинет в ${C.city}е.<br>Уход за лицом и телом, обучение массажу.</p>
+        Косметический кабинет в ${C.city}е.<br>Уход за лицом и телом${eduShown ? ', обучение массажу' : ''}.</p>
     </div>
     <div>
       <h5>Услуги</h5>
@@ -208,7 +208,7 @@ const footer = (root) => `<footer class="ftr">
     <div>
       <h5>Кабинет</h5>
       <a class="lnk" href="${hrefHome(root, '#about')}">О мастере</a><a class="lnk" href="${hrefHome(root, '#results')}">Результаты</a>
-      <a class="lnk" href="${hrefHome(root, '#reviews')}">Отзывы</a><a class="lnk" href="${hrefHome(root, '#edu')}">Обучение</a>
+      <a class="lnk" href="${hrefHome(root, '#reviews')}">Отзывы</a>${eduShown ? `<a class="lnk" href="${hrefHome(root, '#edu')}">Обучение</a>` : ''}
       <a class="lnk" href="${hrefHome(root, '#gift')}">Сертификат</a>
     </div>
     <div>
@@ -492,6 +492,55 @@ ${offerItems.map((o, i) => `      <button class="ofr-dot${i ? '' : ' on'}" type=
 </section>
 `;
 
+// Блок курсов массажа. Скрыт целиком, пока education.show не true —
+// тексты и фото при этом сохраняются в data/site.json и возвращаются
+// обратно одним переключением флага
+const eduShown = site.education && site.education.show === true;
+const eduBlock = !eduShown
+  ? ''
+  : `<!-- ============ ОБУЧЕНИЕ ============ -->
+<section class="edu" id="edu">
+  <div class="wrap edu-in">
+    <div class="rv">
+      <div class="im ph">${pic(site.education.photo, { alt: site.education.title, w: 900, h: 620 })}<span class="bdg">${site.education.badge}</span></div>
+      <div class="edu-side">
+        <div class="edu-flow">
+          <span class="lb">${site.education.flow.label}</span>
+          <b>${site.education.flow.date}</b>
+          <span class="left">${site.education.flow.left}</span>
+        </div>
+        <div class="edu-quote">
+          <p>${site.education.quote.text}</p>
+          <div class="who">${avatar(site.education.quote.avatar, site.education.quote.name)}<div><div class="nm">${site.education.quote.name}</div>
+            <div class="src">${site.education.quote.source}</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="rv">
+      <p class="eyebrow" style="color:var(--sand)">${site.education.eyebrow}</p>
+      <h2>${site.education.title}</h2>
+      <p class="lead">${site.education.lead}</p>
+
+${list(
+  site.education.courses,
+  (c) => `      <div class="crs">
+        <div>
+          <h4>${c.title}</h4>
+          <p class="m">${c.text}</p>
+          <div class="tags">${c.tags.map((t) => `<span class="tag">${t}</span>`).join('')}</div>
+        </div>
+        <div class="rt"><span class="pr">${c.price} BYN</span>
+          <button class="btn" data-book data-svc="Курс «${c.title}»">Записаться</button></div>
+      </div>`
+)}
+
+      <p style="font-size:12.5px; color:#8A7F73; margin:14px 0 0">
+        ${site.education.note}</p>
+    </div>
+  </div>
+</section>
+`;
+
 const indexBody = `<!-- ============ HERO ============ -->
 <section class="hero">
   <div class="wrap hero-in">
@@ -672,7 +721,7 @@ ${list(
 </section>
 
 <!-- ============ ОТЗЫВЫ ============ -->
-<section class="sec" id="reviews">
+<section class="sec sec-dark" id="reviews">
   <div class="wrap">
     <div class="sec-head rv">
       <div>
@@ -725,49 +774,7 @@ ${list(
   </div>
 </section>
 
-${strip(site.strips[1])}
-
-<!-- ============ ОБУЧЕНИЕ ============ -->
-<section class="edu" id="edu">
-  <div class="wrap edu-in">
-    <div class="rv">
-      <div class="im ph">${pic(site.education.photo, { alt: site.education.title, w: 900, h: 620 })}<span class="bdg">${site.education.badge}</span></div>
-      <div class="edu-side">
-        <div class="edu-flow">
-          <span class="lb">${site.education.flow.label}</span>
-          <b>${site.education.flow.date}</b>
-          <span class="left">${site.education.flow.left}</span>
-        </div>
-        <div class="edu-quote">
-          <p>${site.education.quote.text}</p>
-          <div class="who">${avatar(site.education.quote.avatar, site.education.quote.name)}<div><div class="nm">${site.education.quote.name}</div>
-            <div class="src">${site.education.quote.source}</div></div></div>
-        </div>
-      </div>
-    </div>
-    <div class="rv">
-      <p class="eyebrow" style="color:var(--sand)">${site.education.eyebrow}</p>
-      <h2>${site.education.title}</h2>
-      <p class="lead">${site.education.lead}</p>
-
-${list(
-  site.education.courses,
-  (c) => `      <div class="crs">
-        <div>
-          <h4>${c.title}</h4>
-          <p class="m">${c.text}</p>
-          <div class="tags">${c.tags.map((t) => `<span class="tag">${t}</span>`).join('')}</div>
-        </div>
-        <div class="rt"><span class="pr">${c.price} BYN</span>
-          <button class="btn" data-book data-svc="Курс «${c.title}»">Записаться</button></div>
-      </div>`
-)}
-
-      <p style="font-size:12.5px; color:#8A7F73; margin:14px 0 0">
-        ${site.education.note}</p>
-    </div>
-  </div>
-</section>
+${eduBlock}
 
 <!-- ============ СЕРТИФИКАТ ============ -->
 <section class="gift" id="gift">
@@ -798,8 +805,10 @@ ${list(site.gift.items, (i) => `        <li>${i}</li>`)}
   </div>
 </section>
 
+${strip(site.strips[1])}
+
 <!-- ============ ГАЛЕРЕЯ ============ -->
-<section class="sec">
+<section class="sec" style="background:var(--soft)">
   <div class="wrap">
     <p class="eyebrow rv">${site.gallery.eyebrow}</p>
     <h2 class="sec-h rv" style="margin-bottom:26px">${site.gallery.title}</h2>
@@ -1179,7 +1188,7 @@ console.log(`\nБез собственной страницы: ${noPage} — в�
 const slots = [
   ['Первый экран', site.hero.photo],
   ['О мастере', site.about.photo],
-  ['Обучение', site.education.photo],
+  ...(eduShown ? [['Обучение', site.education.photo]] : []),
   ['Сертификат', site.gift.photo],
   ['Карточка в меню «Услуги»', site.megaFeature.photo],
   ...site.reviews.items.map((r) => [`Отзыв: ${r.name}`, r.avatar]),
